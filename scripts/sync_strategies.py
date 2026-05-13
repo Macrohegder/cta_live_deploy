@@ -25,12 +25,30 @@ DEPLOY_STRATEGIES = ROOT / "strategies"
 
 def _find_strategy_file(class_name: str, source_dir: Path) -> Path:
     """在 source_dir 中查找包含指定 class_name 的 .py 文件"""
+    # 1. 精确类名匹配
     for py_file in sorted(source_dir.glob("*.py")):
         if py_file.name.startswith("_"):
             continue
         content = py_file.read_text(encoding="utf-8")
         if f"class {class_name}" in content:
             return py_file
+    
+    # 2. 文件名前缀匹配（适用于 Kbins/Xgb 等类名与文件名不一致的情况）
+    # 提取文件名前缀（如 Kbins_MFI_70）
+    prefix = class_name.split("_")[0] if "_" in class_name else class_name
+    if prefix in ("Kbins", "Xgb"):
+        for py_file in sorted(source_dir.glob("*.py")):
+            if py_file.name.startswith("_"):
+                continue
+            # 文件名是否包含 class_name 的前几个部分
+            name_parts = class_name.split("_")
+            file_stem = py_file.stem
+            # 检查前3个部分是否都出现在文件名中
+            if len(name_parts) >= 3:
+                match = all(part in file_stem for part in name_parts[:3])
+                if match:
+                    return py_file
+    
     return None
 
 

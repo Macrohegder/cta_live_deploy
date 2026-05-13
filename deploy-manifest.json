@@ -1,56 +1,61 @@
 {
   "accounts": {
     "luyl": {
-      "expected_volatility": 0.05,
-      "portfolio_multiplier": 3356.243048000812,
       "strategies": [
         {
-          "allocation": 0.8545162641474545,
+          "allocation": 1.0573867219850943,
           "class_name": "CincoStrategy",
-          "fixed_size": 8,
-          "key": "CincoStrategy_ETH",
-          "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+          "fixed_size": 10,
+          "key": "CincoStrategy_ETH"
+        },
+        {
+          "allocation": 0.6105670063474852,
+          "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
+          "fixed_size": 6,
+          "key": "Kbins_ADX_90_ETH"
         }
       ],
-      "strategy_count": 1
+      "strategy_count": 2
     },
     "nav": {
-      "expected_volatility": 0.1,
-      "portfolio_multiplier": 10.660701096997844,
       "strategies": [
         {
-          "allocation": 1.2700271963871483,
+          "allocation": 1.186821232484439,
           "class_name": "CincoStrategy",
-          "fixed_size": 12,
-          "key": "CincoStrategy_ETH",
-          "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+          "fixed_size": 11,
+          "key": "CincoStrategy_ETH"
         },
         {
-          "allocation": 5.095357658017067,
-          "class_name": "XauIntradayStrategy",
-          "fixed_size": 50,
-          "key": "XauIntradayStrategy_XAU",
-          "vt_symbol": "XAUUSDT_SWAP_OKX.GLOBAL"
+          "allocation": 1.9869104502342358,
+          "class_name": "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
+          "fixed_size": 19,
+          "key": "Kbins_MFI_70_ETH"
         },
         {
-          "allocation": 1.3905286203012306,
+          "allocation": 0.8352503095711251,
+          "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
+          "fixed_size": 8,
+          "key": "Kbins_ADX_90_ETH"
+        },
+        {
+          "allocation": 1.505398519941816,
           "class_name": "TripleRsiLongShortStrategy",
-          "fixed_size": 13,
-          "key": "TripleRsiLongShort_BTC",
-          "vt_symbol": "BTCUSDT_SWAP_OKX.GLOBAL"
+          "fixed_size": 15,
+          "key": "TripleRsiLongShort_BTC"
         }
       ],
-      "strategy_count": 3
+      "strategy_count": 4
     }
   },
   "asset": "crypto",
   "checksums": {
-    "luyl": "142185246ca6b436",
-    "nav": "d439e35e2da64169"
+    "luyl": "2c693ed2fa17037d",
+    "nav": "82dd444f59b99814"
   },
-  "generated_at": "2026-05-13T08:23:55.175298+00:00",
+  "generated_at": "2026-05-13T09:09:57.405433+00:00",
   "sources": {
     "cta_developer_commit": "fd6956d",
+    "portfolio_optimizer_commit": "unknown",
     "tracker_commit": "96fc2bd"
   },
   "version": "1.0.0"

@@ -7,12 +7,24 @@
       "boll_dev": 2.6,
       "boll_window": 40,
       "capital": 100000,
-      "fixed_size": 8,
+      "fixed_size": 10,
       "max_pos_size": 10,
       "risk_level": 0.008,
       "tick_filter": 0,
       "trailing_long": 4.0,
       "trailing_short": 5.0
+    },
+    "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+  },
+  "Kbins_ADX_90_ETH": {
+    "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
+    "setting": {
+      "capital": 100000,
+      "fixed_size": 6,
+      "holding_window": 30,
+      "long_label": 3,
+      "payup": 3,
+      "short_label": 6
     },
     "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
   }

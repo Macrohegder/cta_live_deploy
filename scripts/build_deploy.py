@@ -253,8 +253,17 @@ def generate_account_config(
         class_name = base_config.get("class_name", "")
         vt_symbol = base_config.get("vt_symbol", "")
 
-        # 从组合优化结果中获取 allocation
+        # 从组合优化结果中获取 allocation（支持多种 key 格式）
         allocation = final_allocation.get(base_key, 0)
+        if allocation <= 0:
+            # 尝试用 class_name 查找
+            allocation = final_allocation.get(class_name, 0)
+        if allocation <= 0:
+            # 尝试模糊匹配：final_allocation 中是否有包含 base_key 或 class_name 的 key
+            for opt_key, opt_val in final_allocation.items():
+                if base_key in opt_key or (class_name and class_name in opt_key):
+                    allocation = opt_val
+                    break
         if allocation <= 0:
             print(f"  ⏭️ 策略 {base_key} allocation={allocation:.4f}，不纳入配置")
             continue
