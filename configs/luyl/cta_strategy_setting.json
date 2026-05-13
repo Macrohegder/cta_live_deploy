@@ -3,24 +3,24 @@
     "class_name": "CincoStrategy",
     "setting": {
       "atr_window": 4,
-      "bar_window": 60,
-      "boll_dev": 2.6,
-      "boll_window": 40,
+      "bar_window": 15,
+      "boll_dev": 2.2,
+      "boll_window": 42,
       "capital": 100000,
-      "fixed_size": 5,
+      "fixed_size": 3,
       "max_pos_size": 10,
       "risk_level": 0.008,
       "tick_filter": 0,
-      "trailing_long": 4.0,
-      "trailing_short": 5.0
+      "trailing_long": 0.65,
+      "trailing_short": 0.65
     },
     "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
   },
-  "Kbins_ADX_90_ETH": {
+  "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL": {
     "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
     "setting": {
       "capital": 100000,
-      "fixed_size": 4,
+      "fixed_size": 2,
       "holding_window": 30,
       "long_label": 3,
       "payup": 3,
@@ -28,11 +28,11 @@
     },
     "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
   },
-  "Kbins_MFI_70_ETH": {
+  "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL": {
     "class_name": "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
     "setting": {
       "capital": 100000,
-      "fixed_size": 9,
+      "fixed_size": 5,
       "holding_window": 7,
       "long_label": 9,
       "payup": 3,
@@ -40,22 +40,81 @@
     },
     "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
   },
-  "TripleRsiLongShort_BTC": {
-    "class_name": "TripleRsiLongShortStrategy",
+  "VpMacdStrategy_BTC": {
+    "class_name": "VpMacdStrategy",
     "setting": {
-      "auto_daily_end": true,
       "capital": 100000,
-      "fixed_size": 7,
-      "ma_period": 180,
-      "price_add_rate": 0.01,
-      "rsi_entry_long": 27,
-      "rsi_entry_short": 91,
-      "rsi_exit_long": 65,
-      "rsi_exit_short": 65,
-      "rsi_period": 5,
-      "rsi_prev_threshold_long": 30,
-      "rsi_prev_threshold_short": 30
+      "fast_period": 12,
+      "fixed_size": 14,
+      "lambda_sensitivity": 0.9,
+      "signal_period": 9,
+      "slow_period": 26,
+      "volume_ma_period": 20
     },
     "vt_symbol": "BTCUSDT_SWAP_OKX.GLOBAL"
+  },
+  "VpMacdStrategy_XAU": {
+    "class_name": "VpMacdStrategy",
+    "setting": {
+      "capital": 100000,
+      "fast_period": 12,
+      "fixed_size": 14,
+      "lambda_sensitivity": 0.9,
+      "signal_period": 9,
+      "slow_period": 26,
+      "volume_ma_period": 20
+    },
+    "vt_symbol": "XAUUSDT_SWAP_OKX.GLOBAL"
+  },
+  "Xgb_Multi_H10_I60_MIDPRICE65_SOLUSDT_SWAP_OKX_GLOBAL": {
+    "class_name": "Xgb_Multi_H10_I60_MIDPRICE65_SOLUSDT_SWAP_OKX_GLOBAL",
+    "setting": {
+      "capital": 100000,
+      "fixed_size": 1,
+      "holding_window": 10,
+      "payup": 3
+    },
+    "vt_symbol": "SOLUSDT_SWAP_OKX.GLOBAL"
+  },
+  "Xgb_Multi_H20_I50_SMA55_SOLUSDT_SWAP_OKX_GLOBAL": {
+    "class_name": "Xgb_Multi_H20_I50_SMA55_SOLUSDT_SWAP_OKX_GLOBAL",
+    "setting": {
+      "capital": 100000,
+      "fixed_size": 1,
+      "holding_window": 20,
+      "payup": 3
+    },
+    "vt_symbol": "SOLUSDT_SWAP_OKX.GLOBAL"
+  },
+  "Xgb_Multi_H40_I50_ADXR75_DOGEUSDT_SWAP_OKX_GLOBAL": {
+    "class_name": "Xgb_Multi_H40_I50_ADXR75_DOGEUSDT_SWAP_OKX_GLOBAL",
+    "setting": {
+      "capital": 100000,
+      "fixed_size": 1,
+      "holding_window": 40,
+      "payup": 3
+    },
+    "vt_symbol": "DOGEUSDT_SWAP_OKX.GLOBAL"
+  },
+  "Xgb_Multi_H55_I60_KAMA10_ETHUSDT_SWAP_OKX_GLOBAL": {
+    "class_name": "Xgb_Multi_H55_I60_KAMA10_ETHUSDT_SWAP_OKX_GLOBAL",
+    "setting": {
+      "capital": 100000,
+      "confidence_threshold": 0.6,
+      "fixed_size": 1,
+      "holding_window": 55,
+      "payup": 3
+    },
+    "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+  },
+  "Xgb_Multi_H60_I60_MINUSDM55_DOGEUSDT_SWAP_OKX_GLOBAL": {
+    "class_name": "Xgb_Multi_H60_I60_MINUSDM55_DOGEUSDT_SWAP_OKX_GLOBAL",
+    "setting": {
+      "capital": 100000,
+      "fixed_size": 1,
+      "holding_window": 60,
+      "payup": 3
+    },
+    "vt_symbol": "DOGEUSDT_SWAP_OKX.GLOBAL"
   }
 }
