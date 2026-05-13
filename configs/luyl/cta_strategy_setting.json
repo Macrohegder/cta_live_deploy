@@ -8,7 +8,7 @@
       "boll_window": 40,
       "capital": 100000,
       "fixed_size": 5,
-      "min_trade_size": 1,
+      "max_pos_size": 10,
       "risk_level": 0.008,
       "tick_filter": 0,
       "trailing_long": 4.0,
