@@ -3,19 +3,31 @@
     "luyl": {
       "strategies": [
         {
-          "allocation": 1.0573867219850943,
+          "allocation": 0.5934106162422195,
           "class_name": "CincoStrategy",
-          "fixed_size": 10,
+          "fixed_size": 5,
           "key": "CincoStrategy_ETH"
         },
         {
-          "allocation": 0.6105670063474852,
+          "allocation": 0.9934552251171179,
+          "class_name": "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
+          "fixed_size": 9,
+          "key": "Kbins_MFI_70_ETH"
+        },
+        {
+          "allocation": 0.41762515478556256,
           "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
-          "fixed_size": 6,
+          "fixed_size": 4,
           "key": "Kbins_ADX_90_ETH"
+        },
+        {
+          "allocation": 0.752699259970908,
+          "class_name": "TripleRsiLongShortStrategy",
+          "fixed_size": 7,
+          "key": "TripleRsiLongShort_BTC"
         }
       ],
-      "strategy_count": 2
+      "strategy_count": 4
     },
     "nav": {
       "strategies": [
@@ -49,13 +61,13 @@
   },
   "asset": "crypto",
   "checksums": {
-    "luyl": "2c693ed2fa17037d",
+    "luyl": "ce0332333bd28572",
     "nav": "82dd444f59b99814"
   },
-  "generated_at": "2026-05-13T09:15:02.341213+00:00",
+  "generated_at": "2026-05-13T10:17:51.445373+00:00",
   "sources": {
     "cta_developer_commit": "fd6956d",
-    "portfolio_optimizer_commit": "7f7ab19",
+    "portfolio_optimizer_commit": "80ba3c2",
     "tracker_commit": "479d36e"
   },
   "version": "1.0.0"
