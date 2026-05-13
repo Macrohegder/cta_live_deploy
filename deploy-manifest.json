@@ -52,11 +52,11 @@
     "luyl": "2c693ed2fa17037d",
     "nav": "82dd444f59b99814"
   },
-  "generated_at": "2026-05-13T09:09:57.405433+00:00",
+  "generated_at": "2026-05-13T09:15:02.341213+00:00",
   "sources": {
     "cta_developer_commit": "fd6956d",
-    "portfolio_optimizer_commit": "unknown",
-    "tracker_commit": "96fc2bd"
+    "portfolio_optimizer_commit": "7f7ab19",
+    "tracker_commit": "479d36e"
   },
   "version": "1.0.0"
 }
