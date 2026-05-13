@@ -1,0 +1,50 @@
+{
+  "accounts": {
+    "luyl": {
+      "expected_volatility": 0.1,
+      "portfolio_multiplier": 12.502812641627338,
+      "strategies": [
+        {
+          "allocation": 0.53053209670313,
+          "class_name": "CincoStrategy",
+          "fixed_size": 5,
+          "key": "CincoStrategy_ETH",
+          "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+        }
+      ],
+      "strategy_count": 1
+    },
+    "nav": {
+      "expected_volatility": 0.09999999999999999,
+      "portfolio_multiplier": 78.63550930623212,
+      "strategies": [
+        {
+          "allocation": 0.34836571321837967,
+          "class_name": "CincoStrategy",
+          "fixed_size": 3,
+          "key": "CincoStrategy_ETH",
+          "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+        },
+        {
+          "allocation": 8.304217716170718e-34,
+          "class_name": "XauIntradayStrategy",
+          "fixed_size": 1,
+          "key": "XauIntradayStrategy_XAU",
+          "vt_symbol": "XAUUSDT_SWAP_OKX.GLOBAL"
+        }
+      ],
+      "strategy_count": 2
+    }
+  },
+  "asset": "crypto",
+  "checksums": {
+    "luyl": "cd217332dcf11f70",
+    "nav": "b915476343b04217"
+  },
+  "generated_at": "2026-05-13T01:28:56.929315+00:00",
+  "sources": {
+    "cta_developer_commit": "4cb9ced",
+    "tracker_commit": "96fc2bd"
+  },
+  "version": "1.0.0"
+}

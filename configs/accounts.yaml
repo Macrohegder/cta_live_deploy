@@ -1,0 +1,128 @@
+# ============================================
+# 多账户配置 - 支持策略共享 + 仓位倍数
+# ============================================
+#
+# 设计原则：
+# 1. 底仓策略共享：相同的策略只回测一次，存储基础结果（1倍仓位）
+# 2. 账户级别配置：每个账户独立设置仓位倍数
+# 3. PNL计算时根据倍数缩放
+#
+# 更新记录：
+# 2026-05-03: 大幅精简，只保留实盘运行的策略
+
+# ============================================
+# 基础策略配置（共享）
+# ============================================
+base_strategies:
+
+  # ----- CTA策略 -----
+  CincoStrategy_ETH:
+    class_name: CincoStrategy
+    vt_symbol: ETHUSDT_SWAP_OKX.GLOBAL
+    interval: 1m
+    base_setting:
+      bar_window: 60
+      capital: 100000
+      boll_window: 40
+      boll_dev: 2.6
+      trailing_long: 4.0
+      trailing_short: 5.0
+      atr_window: 4
+      risk_level: 0.008
+      tick_filter: 0
+      fixed_size: 10          # 基础仓位
+
+  XauIntradayStrategy_XAU:
+    class_name: XauIntradayStrategy
+    vt_symbol: XAUUSDT_SWAP_OKX.GLOBAL
+    interval: 1m
+    base_setting:
+      bar_window: 60
+      capital: 100000
+      lookback_days: 3
+      risk_level: 0.01
+      fixed_size: 10          # 基础仓位
+
+  TripleRsiLongShort_BTC:
+    class_name: TripleRsiLongShortStrategy
+    vt_symbol: BTCUSDT_SWAP_OKX.GLOBAL
+    interval: 1m
+    base_setting:
+      rsi_period: 5
+      ma_period: 260
+      rsi_entry_long: 33
+      rsi_exit_long: 55
+      rsi_prev_threshold_long: 42
+      rsi_entry_short: 77
+      rsi_exit_short: 45
+      rsi_prev_threshold_short: 52
+      fixed_size: 10          # 基础仓位
+      price_add_rate: 0.01
+
+  Nr7BreakoutStrategy_XAU:
+    class_name: Nr7BreakoutStrategy
+    vt_symbol: XAUUSDT_SWAP_OKX.GLOBAL
+    interval: 1m
+    base_setting:
+      nr_lookback: 7
+      use_trend_filter: true
+      trend_ma_period: 22
+      use_long_only: true
+      fixed_size: 10           # 基础仓位
+      price_add_rate: 0.03
+
+  # ----- Kbins策略 -----
+  Kbins_MFI_70_ETH:
+    class_name: Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL
+    vt_symbol: ETHUSDT_SWAP_OKX.GLOBAL
+    interval: 1m
+    base_setting:
+      long_label: 9
+      short_label: 0
+      holding_window: 7
+      fixed_size: 10           # 基础仓位
+      payup: 3
+
+  Kbins_ADX_90_ETH:
+    class_name: Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL
+    vt_symbol: ETHUSDT_SWAP_OKX.GLOBAL
+    interval: 1m
+    base_setting:
+      long_label: 3
+      short_label: 6
+      holding_window: 30
+      fixed_size: 10           # 基础仓位
+      payup: 3
+
+
+# ============================================
+# 账户配置
+# ============================================
+accounts:
+
+  # ----- NAV 账户 -----
+  nav:
+    name: "NAV主账户"
+    portfolio_id: "NAV_PORTFOLIO"
+    total_capital: 136966
+    base_currency: "USDT"
+    position_multiplier: 1.0
+    strategies:
+      # 策略名称: 该账户的仓位倍数（相对于base_setting中的fixed_size）
+      CincoStrategy_ETH: 2.0        # 10 * 2 = 20
+      Kbins_MFI_70_ETH: 2.0        # 10 * 2 = 20
+      Kbins_ADX_90_ETH: 5.0        # 10 * 5 = 50
+      XauIntradayStrategy_XAU: 10.0 # 10 * 10 = 100
+      TripleRsiLongShort_BTC: 1.0   # 10 * 1 = 10
+
+  # ----- LUYL 账户 -----
+  luyl:
+    name: "LUYL账户"
+    portfolio_id: "LUYL_PORTFOLIO"
+    total_capital: 25000
+    base_currency: "USDT"
+    position_multiplier: 1.0
+    strategies:
+      CincoStrategy_ETH: 3.0        # 10 * 3 = 30
+      Kbins_ADX_90_ETH: 3.0        # 10 * 3 = 30
+      Nr7BreakoutStrategy_XAU: 0.1  # 10 * 0.1 = 1

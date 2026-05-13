@@ -1,0 +1,19 @@
+{
+  "CincoStrategy_ETH": {
+    "class_name": "CincoStrategy",
+    "setting": {
+      "atr_window": 4,
+      "bar_window": 60,
+      "boll_dev": 2.6,
+      "boll_window": 40,
+      "capital": 100000,
+      "fixed_size": 5,
+      "min_trade_size": 1,
+      "risk_level": 0.008,
+      "tick_filter": 0,
+      "trailing_long": 4.0,
+      "trailing_short": 5.0
+    },
+    "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+  }
+}
