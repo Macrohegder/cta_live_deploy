@@ -1,13 +1,13 @@
 {
   "accounts": {
     "luyl": {
-      "expected_volatility": 0.1,
-      "portfolio_multiplier": 12.502812641627338,
+      "expected_volatility": 0.05,
+      "portfolio_multiplier": 3356.243048000812,
       "strategies": [
         {
-          "allocation": 0.53053209670313,
+          "allocation": 0.8545162641474545,
           "class_name": "CincoStrategy",
-          "fixed_size": 5,
+          "fixed_size": 8,
           "key": "CincoStrategy_ETH",
           "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
         }
@@ -15,35 +15,42 @@
       "strategy_count": 1
     },
     "nav": {
-      "expected_volatility": 0.09999999999999999,
-      "portfolio_multiplier": 78.63550930623212,
+      "expected_volatility": 0.1,
+      "portfolio_multiplier": 10.660701096997844,
       "strategies": [
         {
-          "allocation": 0.34836571321837967,
+          "allocation": 1.2700271963871483,
           "class_name": "CincoStrategy",
-          "fixed_size": 3,
+          "fixed_size": 12,
           "key": "CincoStrategy_ETH",
           "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
         },
         {
-          "allocation": 8.304217716170718e-34,
+          "allocation": 5.095357658017067,
           "class_name": "XauIntradayStrategy",
-          "fixed_size": 1,
+          "fixed_size": 50,
           "key": "XauIntradayStrategy_XAU",
           "vt_symbol": "XAUUSDT_SWAP_OKX.GLOBAL"
+        },
+        {
+          "allocation": 1.3905286203012306,
+          "class_name": "TripleRsiLongShortStrategy",
+          "fixed_size": 13,
+          "key": "TripleRsiLongShort_BTC",
+          "vt_symbol": "BTCUSDT_SWAP_OKX.GLOBAL"
         }
       ],
-      "strategy_count": 2
+      "strategy_count": 3
     }
   },
   "asset": "crypto",
   "checksums": {
-    "luyl": "7eb1e1d746a1ccac",
-    "nav": "db332c89930ddfda"
+    "luyl": "142185246ca6b436",
+    "nav": "d439e35e2da64169"
   },
-  "generated_at": "2026-05-13T08:09:35.426930+00:00",
+  "generated_at": "2026-05-13T08:23:55.175298+00:00",
   "sources": {
-    "cta_developer_commit": "4cb9ced",
+    "cta_developer_commit": "fd6956d",
     "tracker_commit": "96fc2bd"
   },
   "version": "1.0.0"

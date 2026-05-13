@@ -44,6 +44,9 @@ TRACKER_STRATEGIES = TRACKER_ROOT / "strategies"
 DEFAULT_ASSETS = ["crypto"]
 DEFAULT_ACCOUNTS = ["nav", "luyl"]
 
+# 安全上限：单个策略的 allocation 倍数上限
+MAX_ALLOCATION = 100.0  # 超过此值视为异常，不纳入配置
+
 
 def _load_yaml(path: Path) -> dict:
     with open(path, "r", encoding="utf-8") as f:
@@ -132,6 +135,7 @@ def _load_strategy_class_from_dir(class_name: str, search_dirs: List[Path]) -> O
     """在指定目录中查找并加载策略类"""
     import importlib.util
     import inspect
+    import sys
     for directory in search_dirs:
         if not directory.exists():
             continue
@@ -141,8 +145,10 @@ def _load_strategy_class_from_dir(class_name: str, search_dirs: List[Path]) -> O
             content = py_file.read_text(encoding="utf-8")
             if f"class {class_name}" in content:
                 try:
-                    spec = importlib.util.spec_from_file_location(py_file.stem, str(py_file))
+                    module_name = f"deploy_strategies.{directory.name}.{py_file.stem}"
+                    spec = importlib.util.spec_from_file_location(module_name, str(py_file))
                     module = importlib.util.module_from_spec(spec)
+                    sys.modules[module_name] = module
                     spec.loader.exec_module(module)
                     for name, obj in inspect.getmembers(module, inspect.isclass):
                         if name == class_name and hasattr(obj, "parameters"):
@@ -251,6 +257,10 @@ def generate_account_config(
         allocation = final_allocation.get(base_key, 0)
         if allocation <= 0:
             print(f"  ⏭️ 策略 {base_key} allocation={allocation:.4f}，不纳入配置")
+            continue
+        if allocation > MAX_ALLOCATION:
+            print(f"  🚨 策略 {base_key} allocation={allocation:.2f}x 超过安全上限 {MAX_ALLOCATION}x，不纳入配置")
+            print(f"     提示：该策略历史波动率过低或数据异常，建议检查 backtests.db 或调整策略参数")
             continue
 
         # 查找 cta_developer 中的优化参数

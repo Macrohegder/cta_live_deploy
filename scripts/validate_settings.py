@@ -34,10 +34,13 @@ def _load_strategy_class(class_name: str) -> Optional[Type]:
         if py_file.name.startswith("_"):
             continue
         try:
+            module_name = f"live_strategies.{py_file.stem}"
             spec = importlib.util.spec_from_file_location(
-                py_file.stem, str(py_file)
+                module_name, str(py_file)
             )
             module = importlib.util.module_from_spec(spec)
+            # 先注册到 sys.modules，避免 dataclass 等装饰器报错
+            sys.modules[module_name] = module
             spec.loader.exec_module(module)
             for _name, obj in inspect.getmembers(module, inspect.isclass):
                 if _name == class_name:
@@ -56,10 +59,12 @@ def _scan_strategy_classes() -> Dict[str, Path]:
         if py_file.name.startswith("_"):
             continue
         try:
+            module_name = f"live_strategies.{py_file.stem}"
             spec = importlib.util.spec_from_file_location(
-                py_file.stem, str(py_file)
+                module_name, str(py_file)
             )
             module = importlib.util.module_from_spec(spec)
+            sys.modules[module_name] = module
             spec.loader.exec_module(module)
             for _name, obj in inspect.getmembers(module, inspect.isclass):
                 if hasattr(obj, "author"):  # vnpy CtaTemplate 特征

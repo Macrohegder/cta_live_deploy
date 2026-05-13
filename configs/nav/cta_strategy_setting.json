@@ -7,7 +7,7 @@
       "boll_dev": 2.6,
       "boll_window": 40,
       "capital": 100000,
-      "fixed_size": 3,
+      "fixed_size": 12,
       "max_pos_size": 10,
       "risk_level": 0.008,
       "tick_filter": 0,
@@ -16,12 +16,30 @@
     },
     "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
   },
+  "TripleRsiLongShort_BTC": {
+    "class_name": "TripleRsiLongShortStrategy",
+    "setting": {
+      "auto_daily_end": true,
+      "capital": 100000,
+      "fixed_size": 13,
+      "ma_period": 180,
+      "price_add_rate": 0.01,
+      "rsi_entry_long": 27,
+      "rsi_entry_short": 91,
+      "rsi_exit_long": 65,
+      "rsi_exit_short": 65,
+      "rsi_period": 5,
+      "rsi_prev_threshold_long": 30,
+      "rsi_prev_threshold_short": 30
+    },
+    "vt_symbol": "BTCUSDT_SWAP_OKX.GLOBAL"
+  },
   "XauIntradayStrategy_XAU": {
     "class_name": "XauIntradayStrategy",
     "setting": {
       "bar_window": 60,
       "capital": 100000,
-      "fixed_size": 1,
+      "fixed_size": 50,
       "lookback_days": 3,
       "max_pos_size": 5,
       "risk_level": 0.01
