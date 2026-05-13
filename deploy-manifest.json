@@ -33,12 +33,6 @@
           "key": "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 1.4215146585196305,
-          "class_name": "VpMacdStrategy",
-          "fixed_size": 14,
-          "key": "VpMacdStrategy_XAU"
-        },
-        {
           "allocation": 0.2662938847223251,
           "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 2,
@@ -63,7 +57,7 @@
           "key": "Xgb_Multi_H20_I50_SMA55_SOLUSDT_SWAP_OKX_GLOBAL"
         }
       ],
-      "strategy_count": 10
+      "strategy_count": 9
     },
     "nav": {
       "strategies": [
@@ -98,12 +92,6 @@
           "key": "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 2.843029317039261,
-          "class_name": "VpMacdStrategy",
-          "fixed_size": 28,
-          "key": "VpMacdStrategy_XAU"
-        },
-        {
           "allocation": 0.5325877694446502,
           "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 5,
@@ -128,15 +116,15 @@
           "key": "Xgb_Multi_H20_I50_SMA55_SOLUSDT_SWAP_OKX_GLOBAL"
         }
       ],
-      "strategy_count": 10
+      "strategy_count": 9
     }
   },
   "asset": "crypto",
   "checksums": {
-    "luyl": "289ce539ea28a0de",
-    "nav": "111878f346f72a7f"
+    "luyl": "2647f2d687fd53d4",
+    "nav": "da67943a420d760f"
   },
-  "generated_at": "2026-05-13T22:47:42.084888+00:00",
+  "generated_at": "2026-05-13T22:48:23.299259+00:00",
   "sources": {
     "cta_developer_commit": "fd6956d",
     "portfolio_optimizer_commit": "80ba3c2",

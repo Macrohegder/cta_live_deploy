@@ -53,19 +53,6 @@
     },
     "vt_symbol": "BTCUSDT_SWAP_OKX.GLOBAL"
   },
-  "VpMacdStrategy_XAU": {
-    "class_name": "VpMacdStrategy",
-    "setting": {
-      "capital": 100000,
-      "fast_period": 12,
-      "fixed_size": 14,
-      "lambda_sensitivity": 0.9,
-      "signal_period": 9,
-      "slow_period": 26,
-      "volume_ma_period": 20
-    },
-    "vt_symbol": "XAUUSDT_SWAP_OKX.GLOBAL"
-  },
   "Xgb_Multi_H10_I60_MIDPRICE65_SOLUSDT_SWAP_OKX_GLOBAL": {
     "class_name": "Xgb_Multi_H10_I60_MIDPRICE65_SOLUSDT_SWAP_OKX_GLOBAL",
     "setting": {
