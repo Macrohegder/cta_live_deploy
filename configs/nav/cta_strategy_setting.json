@@ -1,4 +1,21 @@
 {
+  "CincoStrategy_BTC": {
+    "class_name": "CincoStrategy",
+    "setting": {
+      "atr_window": 4,
+      "bar_window": 15,
+      "boll_dev": 2.2,
+      "boll_window": 42,
+      "capital": 100000,
+      "fixed_size": 8,
+      "max_pos_size": 10,
+      "risk_level": 0.008,
+      "tick_filter": 0,
+      "trailing_long": 0.65,
+      "trailing_short": 0.65
+    },
+    "vt_symbol": "BTCUSDT_SWAP_OKX.GLOBAL"
+  },
   "CincoStrategy_ETH": {
     "class_name": "CincoStrategy",
     "setting": {
@@ -7,7 +24,7 @@
       "boll_dev": 2.2,
       "boll_window": 42,
       "capital": 100000,
-      "fixed_size": 6,
+      "fixed_size": 8,
       "max_pos_size": 10,
       "risk_level": 0.008,
       "tick_filter": 0,
@@ -16,11 +33,97 @@
     },
     "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
   },
+  "CincoStrategy_SOL": {
+    "class_name": "CincoStrategy",
+    "setting": {
+      "atr_window": 4,
+      "bar_window": 15,
+      "boll_dev": 2.2,
+      "boll_window": 42,
+      "capital": 100000,
+      "fixed_size": 8,
+      "max_pos_size": 10,
+      "risk_level": 0.008,
+      "tick_filter": 0,
+      "trailing_long": 0.65,
+      "trailing_short": 0.65
+    },
+    "vt_symbol": "SOLUSDT_SWAP_OKX.GLOBAL"
+  },
+  "ConsecutiveDownDaysStrategy_ETH": {
+    "class_name": "ConsecutiveDownDaysStrategy",
+    "setting": {
+      "auto_daily_end": true,
+      "capital": 100000,
+      "consecutive_days": 3,
+      "daily_end_minute": 59,
+      "fixed_size": 8,
+      "rsi_overbought": 70,
+      "rsi_period": 2,
+      "tick_add": 0,
+      "trend_period": 200
+    },
+    "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+  },
+  "DonchianAdxBreakoutStrategy_BTC": {
+    "class_name": "DonchianAdxBreakoutStrategy",
+    "setting": {
+      "adx_mode": 1,
+      "adx_threshold": 25,
+      "adx_window": 14,
+      "capital": 100000,
+      "daily_end_minute": 59,
+      "donchian_window": 15,
+      "exit_window": 0,
+      "fixed_size": 8,
+      "ma_period": 200,
+      "use_long_only": true,
+      "use_trend_filter": false
+    },
+    "vt_symbol": "BTCUSDT_SWAP_OKX.GLOBAL"
+  },
+  "DonchianAdxBreakoutStrategy_ETH": {
+    "class_name": "DonchianAdxBreakoutStrategy",
+    "setting": {
+      "adx_mode": 1,
+      "adx_threshold": 23,
+      "adx_window": 13,
+      "capital": 100000,
+      "daily_end_minute": 59,
+      "donchian_window": 14,
+      "exit_window": 2,
+      "fixed_size": 8,
+      "ma_period": 180,
+      "price_add_rate": 0.001,
+      "use_long_only": true,
+      "use_trend_filter": false
+    },
+    "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+  },
+  "FiveDayLowStrategy_BTC": {
+    "class_name": "FiveDayLowStrategy",
+    "setting": {
+      "atr_window": 14,
+      "capital": 100000,
+      "daily_end_minute": 59,
+      "fixed_size": 8,
+      "lookback_days": 5,
+      "ma_window": 5,
+      "max_holding_days": 5,
+      "require_down_day": true,
+      "sl_atr_multiplier": 3.0,
+      "tp_atr_multiplier": 5.0,
+      "use_ma_exit": true,
+      "use_stop_loss": true,
+      "use_take_profit": false
+    },
+    "vt_symbol": "BTCUSDT_SWAP_OKX.GLOBAL"
+  },
   "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL": {
     "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
     "setting": {
       "capital": 100000,
-      "fixed_size": 5,
+      "fixed_size": 8,
       "holding_window": 30,
       "long_label": 3,
       "payup": 3,
@@ -32,11 +135,81 @@
     "class_name": "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
     "setting": {
       "capital": 100000,
-      "fixed_size": 11,
+      "fixed_size": 8,
       "holding_window": 7,
       "long_label": 9,
       "payup": 3,
       "short_label": 0
+    },
+    "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+  },
+  "MacdHistogramStrategy_ETH": {
+    "class_name": "MacdHistogramStrategy",
+    "setting": {
+      "auto_daily_end": true,
+      "capital": 100000,
+      "daily_end_hour": 14,
+      "daily_end_minute": 59,
+      "decline_days": 4,
+      "fast_period": 12,
+      "fixed_size": 8,
+      "signal_period": 9,
+      "slow_period": 26,
+      "tick_add": 0
+    },
+    "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+  },
+  "Nr7BreakoutStrategy_BTC": {
+    "class_name": "Nr7BreakoutStrategy",
+    "setting": {
+      "capital": 100000,
+      "fixed_size": 8,
+      "nr_lookback": 7,
+      "trend_ma_period": 20,
+      "use_long_only": true,
+      "use_trend_filter": true
+    },
+    "vt_symbol": "BTCUSDT_SWAP_OKX.GLOBAL"
+  },
+  "Nr7BreakoutStrategy_ETH": {
+    "class_name": "Nr7BreakoutStrategy",
+    "setting": {
+      "capital": 100000,
+      "fixed_size": 8,
+      "nr_lookback": 7,
+      "trend_ma_period": 20,
+      "use_long_only": true,
+      "use_trend_filter": true
+    },
+    "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+  },
+  "Nr7BreakoutStrategy_XAU": {
+    "class_name": "Nr7BreakoutStrategy",
+    "setting": {
+      "capital": 100000,
+      "fixed_size": 8,
+      "nr_lookback": 7,
+      "price_add_rate": 0.001,
+      "trend_ma_period": 22,
+      "use_long_only": true,
+      "use_trend_filter": true
+    },
+    "vt_symbol": "XAUUSDT_SWAP_OKX.GLOBAL"
+  },
+  "TripleRsiLongShortStrategy_ETH": {
+    "class_name": "TripleRsiLongShortStrategy",
+    "setting": {
+      "auto_daily_end": true,
+      "capital": 100000,
+      "fixed_size": 8,
+      "ma_period": 200,
+      "rsi_entry_long": 30,
+      "rsi_entry_short": 70,
+      "rsi_exit_long": 50,
+      "rsi_exit_short": 50,
+      "rsi_period": 5,
+      "rsi_prev_threshold_long": 60,
+      "rsi_prev_threshold_short": 40
     },
     "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
   },
@@ -45,13 +218,55 @@
     "setting": {
       "capital": 100000,
       "fast_period": 12,
-      "fixed_size": 28,
+      "fixed_size": 8,
       "lambda_sensitivity": 0.9,
       "signal_period": 9,
       "slow_period": 26,
       "volume_ma_period": 20
     },
     "vt_symbol": "BTCUSDT_SWAP_OKX.GLOBAL"
+  },
+  "VpMacdStrategy_XAU": {
+    "class_name": "VpMacdStrategy",
+    "setting": {
+      "capital": 100000,
+      "fast_period": 12,
+      "fixed_size": 8,
+      "lambda_sensitivity": 0.9,
+      "signal_period": 9,
+      "slow_period": 26,
+      "volume_ma_period": 20
+    },
+    "vt_symbol": "XAUUSDT_SWAP_OKX.GLOBAL"
+  },
+  "WilliamsRMrSimpleStrategy_ETH": {
+    "class_name": "WilliamsRMrSimpleStrategy",
+    "setting": {
+      "auto_daily_end": true,
+      "capital": 100000,
+      "daily_end_hour": 14,
+      "daily_end_minute": 59,
+      "fixed_size": 8,
+      "ma_period": 200,
+      "tick_add": 0,
+      "use_ma_filter": false,
+      "wr_entry": -80,
+      "wr_exit": -20,
+      "wr_period": 14
+    },
+    "vt_symbol": "ETHUSDT_SWAP_OKX.GLOBAL"
+  },
+  "XauIntradayStrategy_XAU": {
+    "class_name": "XauIntradayStrategy",
+    "setting": {
+      "bar_window": 60,
+      "capital": 100000,
+      "fixed_size": 8,
+      "lookback_days": 3,
+      "max_pos_size": 5,
+      "risk_level": 0.01
+    },
+    "vt_symbol": "XAUUSDT_SWAP_OKX.GLOBAL"
   },
   "Xgb_Multi_H10_I60_MIDPRICE65_SOLUSDT_SWAP_OKX_GLOBAL": {
     "class_name": "Xgb_Multi_H10_I60_MIDPRICE65_SOLUSDT_SWAP_OKX_GLOBAL",

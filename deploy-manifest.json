@@ -3,128 +3,296 @@
     "luyl": {
       "strategies": [
         {
-          "allocation": 0.317708370053663,
-          "class_name": "CincoStrategy",
-          "fixed_size": 3,
-          "key": "CincoStrategy_ETH"
+          "allocation": 0.8695652173913043,
+          "class_name": "Nr7BreakoutStrategy",
+          "fixed_size": 8,
+          "key": "Nr7BreakoutStrategy_XAU"
         },
         {
-          "allocation": 0.650679642503829,
+          "allocation": 0.8695652173913043,
+          "class_name": "VpMacdStrategy",
+          "fixed_size": 8,
+          "key": "VpMacdStrategy_XAU"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "XauIntradayStrategy",
+          "fixed_size": 8,
+          "key": "XauIntradayStrategy_XAU"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "Xgb_Multi_H55_I60_KAMA10_ETHUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H55_I60_KAMA10_ETHUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 0.42576777665333526,
+          "allocation": 0.8695652173913043,
           "class_name": "Xgb_Multi_H60_I60_MINUSDM55_DOGEUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H60_I60_MINUSDM55_DOGEUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 0.49561828562014687,
+          "allocation": 0.8695652173913043,
+          "class_name": "CincoStrategy",
+          "fixed_size": 8,
+          "key": "CincoStrategy_SOL"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "Xgb_Multi_H40_I50_ADXR75_DOGEUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H40_I50_ADXR75_DOGEUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 0.566833287394402,
+          "allocation": 0.8695652173913043,
+          "class_name": "CincoStrategy",
+          "fixed_size": 8,
+          "key": "CincoStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
-          "fixed_size": 5,
+          "fixed_size": 8,
           "key": "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 0.2662938847223251,
-          "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
-          "fixed_size": 2,
-          "key": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL"
+          "allocation": 0.8695652173913043,
+          "class_name": "CincoStrategy",
+          "fixed_size": 8,
+          "key": "CincoStrategy_BTC"
         },
         {
-          "allocation": 0.7930772197096925,
+          "allocation": 0.8695652173913043,
+          "class_name": "DonchianAdxBreakoutStrategy",
+          "fixed_size": 8,
+          "key": "DonchianAdxBreakoutStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "Xgb_Multi_H10_I60_MIDPRICE65_SOLUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H10_I60_MIDPRICE65_SOLUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 1.4215146585196305,
+          "allocation": 0.8695652173913043,
+          "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
+          "fixed_size": 8,
+          "key": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "DonchianAdxBreakoutStrategy",
+          "fixed_size": 8,
+          "key": "DonchianAdxBreakoutStrategy_BTC"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "VpMacdStrategy",
-          "fixed_size": 14,
+          "fixed_size": 8,
           "key": "VpMacdStrategy_BTC"
         },
         {
-          "allocation": 0.6882098412874001,
+          "allocation": 0.8695652173913043,
+          "class_name": "Nr7BreakoutStrategy",
+          "fixed_size": 8,
+          "key": "Nr7BreakoutStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "TripleRsiLongShortStrategy",
+          "fixed_size": 8,
+          "key": "TripleRsiLongShortStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "Xgb_Multi_H20_I50_SMA55_SOLUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H20_I50_SMA55_SOLUSDT_SWAP_OKX_GLOBAL"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "ConsecutiveDownDaysStrategy",
+          "fixed_size": 8,
+          "key": "ConsecutiveDownDaysStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "MacdHistogramStrategy",
+          "fixed_size": 8,
+          "key": "MacdHistogramStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "WilliamsRMrSimpleStrategy",
+          "fixed_size": 8,
+          "key": "WilliamsRMrSimpleStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "Nr7BreakoutStrategy",
+          "fixed_size": 8,
+          "key": "Nr7BreakoutStrategy_BTC"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "FiveDayLowStrategy",
+          "fixed_size": 8,
+          "key": "FiveDayLowStrategy_BTC"
         }
       ],
-      "strategy_count": 9
+      "strategy_count": 23
     },
     "nav": {
       "strategies": [
         {
-          "allocation": 0.635416740107326,
-          "class_name": "CincoStrategy",
-          "fixed_size": 6,
-          "key": "CincoStrategy_ETH"
+          "allocation": 0.8695652173913043,
+          "class_name": "Nr7BreakoutStrategy",
+          "fixed_size": 8,
+          "key": "Nr7BreakoutStrategy_XAU"
         },
         {
-          "allocation": 1.301359285007658,
+          "allocation": 0.8695652173913043,
+          "class_name": "VpMacdStrategy",
+          "fixed_size": 8,
+          "key": "VpMacdStrategy_XAU"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "XauIntradayStrategy",
+          "fixed_size": 8,
+          "key": "XauIntradayStrategy_XAU"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "Xgb_Multi_H55_I60_KAMA10_ETHUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H55_I60_KAMA10_ETHUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 0.8515355533066705,
+          "allocation": 0.8695652173913043,
           "class_name": "Xgb_Multi_H60_I60_MINUSDM55_DOGEUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H60_I60_MINUSDM55_DOGEUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 0.9912365712402937,
+          "allocation": 0.8695652173913043,
+          "class_name": "CincoStrategy",
+          "fixed_size": 8,
+          "key": "CincoStrategy_SOL"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "Xgb_Multi_H40_I50_ADXR75_DOGEUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H40_I50_ADXR75_DOGEUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 1.133666574788804,
+          "allocation": 0.8695652173913043,
+          "class_name": "CincoStrategy",
+          "fixed_size": 8,
+          "key": "CincoStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
-          "fixed_size": 11,
+          "fixed_size": 8,
           "key": "Kbins_MFI_70_B10_L9_S0_H7_I30_long_short_ETHUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 0.5325877694446502,
-          "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
-          "fixed_size": 5,
-          "key": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL"
+          "allocation": 0.8695652173913043,
+          "class_name": "CincoStrategy",
+          "fixed_size": 8,
+          "key": "CincoStrategy_BTC"
         },
         {
-          "allocation": 1.586154439419385,
+          "allocation": 0.8695652173913043,
+          "class_name": "DonchianAdxBreakoutStrategy",
+          "fixed_size": 8,
+          "key": "DonchianAdxBreakoutStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "Xgb_Multi_H10_I60_MIDPRICE65_SOLUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H10_I60_MIDPRICE65_SOLUSDT_SWAP_OKX_GLOBAL"
         },
         {
-          "allocation": 2.843029317039261,
+          "allocation": 0.8695652173913043,
+          "class_name": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL",
+          "fixed_size": 8,
+          "key": "Kbins_ADX_90_B10_L3_S6_H30_I45_long_short_ETHUSDT_SWAP_OKX_GLOBAL"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "DonchianAdxBreakoutStrategy",
+          "fixed_size": 8,
+          "key": "DonchianAdxBreakoutStrategy_BTC"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "VpMacdStrategy",
-          "fixed_size": 28,
+          "fixed_size": 8,
           "key": "VpMacdStrategy_BTC"
         },
         {
-          "allocation": 1.3764196825748003,
+          "allocation": 0.8695652173913043,
+          "class_name": "Nr7BreakoutStrategy",
+          "fixed_size": 8,
+          "key": "Nr7BreakoutStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "TripleRsiLongShortStrategy",
+          "fixed_size": 8,
+          "key": "TripleRsiLongShortStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
           "class_name": "Xgb_Multi_H20_I50_SMA55_SOLUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H20_I50_SMA55_SOLUSDT_SWAP_OKX_GLOBAL"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "ConsecutiveDownDaysStrategy",
+          "fixed_size": 8,
+          "key": "ConsecutiveDownDaysStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "MacdHistogramStrategy",
+          "fixed_size": 8,
+          "key": "MacdHistogramStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "WilliamsRMrSimpleStrategy",
+          "fixed_size": 8,
+          "key": "WilliamsRMrSimpleStrategy_ETH"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "Nr7BreakoutStrategy",
+          "fixed_size": 8,
+          "key": "Nr7BreakoutStrategy_BTC"
+        },
+        {
+          "allocation": 0.8695652173913043,
+          "class_name": "FiveDayLowStrategy",
+          "fixed_size": 8,
+          "key": "FiveDayLowStrategy_BTC"
         }
       ],
-      "strategy_count": 9
+      "strategy_count": 23
     }
   },
   "asset": "crypto",
   "checksums": {
-    "luyl": "2647f2d687fd53d4",
-    "nav": "da67943a420d760f"
+    "luyl": "9a7f1f3b77304d4e",
+    "nav": "9a7f1f3b77304d4e"
   },
-  "generated_at": "2026-05-14T00:50:56.465801+00:00",
+  "generated_at": "2026-05-14T01:59:44.243675+00:00",
   "sources": {
     "cta_developer_commit": "fd6956d",
     "portfolio_optimizer_commit": "80ba3c2",
