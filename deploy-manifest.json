@@ -3,6 +3,12 @@
     "luyl": {
       "strategies": [
         {
+          "allocation": 0.317708370053663,
+          "class_name": "CincoStrategy",
+          "fixed_size": 3,
+          "key": "CincoStrategy_ETH"
+        },
+        {
           "allocation": 0.650679642503829,
           "class_name": "Xgb_Multi_H55_I60_KAMA10_ETHUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
@@ -19,12 +25,6 @@
           "class_name": "Xgb_Multi_H40_I50_ADXR75_DOGEUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H40_I50_ADXR75_DOGEUSDT_SWAP_OKX_GLOBAL"
-        },
-        {
-          "allocation": 0.317708370053663,
-          "class_name": "CincoStrategy",
-          "fixed_size": 3,
-          "key": "CincoStrategy_ETH"
         },
         {
           "allocation": 0.566833287394402,
@@ -62,6 +62,12 @@
     "nav": {
       "strategies": [
         {
+          "allocation": 0.635416740107326,
+          "class_name": "CincoStrategy",
+          "fixed_size": 6,
+          "key": "CincoStrategy_ETH"
+        },
+        {
           "allocation": 1.301359285007658,
           "class_name": "Xgb_Multi_H55_I60_KAMA10_ETHUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
@@ -78,12 +84,6 @@
           "class_name": "Xgb_Multi_H40_I50_ADXR75_DOGEUSDT_SWAP_OKX_GLOBAL",
           "fixed_size": 1,
           "key": "Xgb_Multi_H40_I50_ADXR75_DOGEUSDT_SWAP_OKX_GLOBAL"
-        },
-        {
-          "allocation": 0.635416740107326,
-          "class_name": "CincoStrategy",
-          "fixed_size": 6,
-          "key": "CincoStrategy_ETH"
         },
         {
           "allocation": 1.133666574788804,
@@ -124,7 +124,7 @@
     "luyl": "2647f2d687fd53d4",
     "nav": "da67943a420d760f"
   },
-  "generated_at": "2026-05-13T22:48:23.299259+00:00",
+  "generated_at": "2026-05-14T00:50:56.465801+00:00",
   "sources": {
     "cta_developer_commit": "fd6956d",
     "portfolio_optimizer_commit": "80ba3c2",
