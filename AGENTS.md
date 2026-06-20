@@ -33,12 +33,26 @@ cta_live_deploy/
 - `fix: correct fixed_size for XauIntradayStrategy_XAU` — 修复参数
 - `chore: sync strategy code from cta_developer@abc1234` — 同步代码
 
+:root/quant/cta_live_deploy/AGENTS.md
+
 ## 跨项目协作
 
 | 动作 | 源头 | 目标 | 说明 |
 |------|------|------|------|
 | 策略代码同步 | cta_developer/cta/strategies/ | cta_live_deploy/strategies/ | 通过 sync_strategies.py |
 | 单策略参数 | cta_developer/cta_strategy_setting_*.json | build_deploy.py 输入 | 最优参数 |
-| 组合权重 | tracker/data/portfolio_opt_*.json | build_deploy.py 输入 | 风险平价结果 |
+| 组合权重 | portfolio_optimizer/data/portfolio_opt_*.json | build_deploy.py 输入 | 风险平价结果 |
 | 账户定义 | tracker/config/accounts.yaml | cta_live_deploy/configs/accounts.yaml | 同步 |
 | 实盘部署 | cta_live_deploy/ | 交易服务器 | git pull |
+
+## 与其他 Agent 的协作
+
+| 协作对象 | 关系 | 说明 |
+|---------|------|------|
+| `cta_developer` | 上游 | 策略源码和单策略参数来源 |
+| `portfolio_optimizer` | 上游 | 组合权重和账户配置来源 |
+| `tracker` | 上游 | 账户定义来源 |
+| `spread_trader` | 平行 | 套利策略实盘部署不经过本仓库 |
+| `data_operator` | 依赖 | 若发现实盘数据异常，转交 data_operator |
+
+**边界说明**：本仓库是 CTA 策略**唯一实盘部署来源**，不处理套利策略实盘部署。

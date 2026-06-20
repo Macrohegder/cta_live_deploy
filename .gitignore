@@ -34,3 +34,4 @@ okx_api_config.yaml
 # Backup
 *.bak
 backup_*/
+.kimi/
