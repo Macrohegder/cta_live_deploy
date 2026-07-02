@@ -14,12 +14,13 @@ ROOT = Path(__file__).resolve().parents[1]
 STRATEGIES_DIR = ROOT / "strategies"
 
 
-def _load_strategy_class(class_name: str) -> Optional[Type]:
-    if not STRATEGIES_DIR.exists():
-        raise FileNotFoundError(f"策略目录不存在: {STRATEGIES_DIR}")
+def _load_strategy_class(class_name: str, strategies_dir: Optional[Path] = None) -> Optional[Type]:
+    search_dir = strategies_dir or STRATEGIES_DIR
+    if not search_dir.exists():
+        raise FileNotFoundError(f"策略目录不存在: {search_dir}")
 
     candidates = []
-    for py_file in STRATEGIES_DIR.glob("*.py"):
+    for py_file in search_dir.glob("*.py"):
         if py_file.name.startswith("_"):
             continue
         content = py_file.read_text(encoding="utf-8")
@@ -50,6 +51,9 @@ def _load_strategy_class(class_name: str) -> Optional[Type]:
 
 def _exec_module_and_get_class(py_file: Path, class_name: str) -> Optional[Type]:
     try:
+        # 确保 cta_live_deploy 根目录在 sys.path 中，以便 strategies.xxx 能被解析
+        if str(ROOT) not in sys.path:
+            sys.path.insert(0, str(ROOT))
         module_name = f"live_strategies.{py_file.stem}"
         spec = importlib.util.spec_from_file_location(module_name, str(py_file))
         module = importlib.util.module_from_spec(spec)
@@ -70,7 +74,14 @@ def validate_vt_symbol(vt_symbol: str) -> bool:
     return len(parts) == 2 and all(parts)
 
 
-def validate_cta_config(config_path: Path, verbose: bool = True) -> bool:
+def validate_cta_config(config_path: Path, verbose: bool = True, strategies_dir: Optional[Path] = None) -> bool:
+    # 如果从 cta_developer 等外部目录加载策略，需要把其项目根目录加入 sys.path
+    # 以便策略文件中的 from cta.strategies.xxx 等 import 能正常解析
+    if strategies_dir:
+        project_root = strategies_dir.parents[1]  # e.g. /root/quant/cta_developer/cta/strategies -> /root/quant/cta_developer
+        if str(project_root) not in sys.path:
+            sys.path.insert(0, str(project_root))
+
     if not config_path.exists():
         raise FileNotFoundError(f"配置文件不存在: {config_path}")
 
@@ -90,7 +101,7 @@ def validate_cta_config(config_path: Path, verbose: bool = True) -> bool:
         if verbose:
             print(f"\n[CHECK] {key} | class={class_name}")
 
-        strategy_cls = _load_strategy_class(class_name)
+        strategy_cls = _load_strategy_class(class_name, strategies_dir=strategies_dir)
         if strategy_cls is None:
             raise ValueError(f"[R4] {key}: 策略类 {class_name} 找不到定义")
 
@@ -134,7 +145,7 @@ def validate_cta_config(config_path: Path, verbose: bool = True) -> bool:
     return True
 
 
-def validate_all(configs_dir: Path, verbose: bool = True) -> bool:
+def validate_all(configs_dir: Path, verbose: bool = True, strategies_dir: Optional[Path] = None) -> bool:
     all_ok = True
     for account_dir in sorted(configs_dir.iterdir()):
         if not account_dir.is_dir():
@@ -146,7 +157,7 @@ def validate_all(configs_dir: Path, verbose: bool = True) -> bool:
         print(f"# 账户: {account_dir.name}")
         print(f"{'#'*60}")
         try:
-            validate_cta_config(config_file, verbose=verbose)
+            validate_cta_config(config_file, verbose=verbose, strategies_dir=strategies_dir)
         except Exception as e:
             print(f"\n[FAIL] {e}")
             all_ok = False
@@ -157,16 +168,18 @@ def main():
     parser = argparse.ArgumentParser(description="CTA 实盘配置校验工具")
     parser.add_argument("--config", type=str, help="cta_strategy_setting.json 路径")
     parser.add_argument("--all", action="store_true", help="校验 configs/ 下所有账户")
+    parser.add_argument("--strategies-dir", type=str, help="策略代码目录，默认 cta_live_deploy/strategies/")
     parser.add_argument("--quiet", action="store_true", help="静默模式")
     args = parser.parse_args()
 
     verbose = not args.quiet
+    strategies_dir = Path(args.strategies_dir) if args.strategies_dir else None
     try:
         if args.all:
-            ok = validate_all(ROOT / "configs", verbose=verbose)
+            ok = validate_all(ROOT / "configs", verbose=verbose, strategies_dir=strategies_dir)
             sys.exit(0 if ok else 1)
         elif args.config:
-            validate_cta_config(Path(args.config), verbose=verbose)
+            validate_cta_config(Path(args.config), verbose=verbose, strategies_dir=strategies_dir)
             sys.exit(0)
         else:
             parser.print_help()

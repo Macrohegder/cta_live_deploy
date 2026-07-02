@@ -1,27 +1,18 @@
 """
-连续下跌反转策略 (Consecutive Down Days Mean Reversion) — 自包含版
+RSI均值回归策略 (自包含版)
 =========================================================
-基于 QuantifiedStrategies 文章复现:
-- 连续N日下跌后，在上升趋势中做多
-- RSI(2)超卖确认入场
-- RSI超买或趋势反转时出场
 
-策略特点:
-- 简单的均值回归逻辑
-- 结合趋势过滤（价格在均线之上）
-- 适合波动大/熊市中的反弹交易
-
-作者: Raymond Hsiao
-来源: strategy_factory 自动生成 + 人工重构为 Signal/Factor 架构
-重构时间: 2025-04
+交易逻辑:
+- 入场: RSI超卖做多
+- 出场: RSI超买平仓
 
 架构说明:
     Strategy (TargetPosTemplate) -> Signal (交易逻辑) -> Factor (指标计算)
     
     三层分离优势:
-    1. 指标计算与交易执行解耦，方便单元测试
-    2. 信号逻辑独立，可复用于多个策略
-    3. UI变量与核心逻辑分离，实盘监控更清晰
+    1. 指标计算与交易执行解耦 方便单元测试
+    2. 信号逻辑独立 可复用于多个策略
+    3. UI变量与核心逻辑分离 实盘监控更清晰
 
 实盘特性:
     - 继承 TargetPosTemplate，自动 diff 下单，避免手动的开平仓逻辑错误
@@ -42,6 +33,7 @@ from vnpy_ctastrategy import (
     BarGenerator,
     ArrayManager,
 )
+from vnpy_ctastrategy.base import EngineType
 
 
 # =============================================================================
@@ -115,9 +107,17 @@ def infer_market_profile(vt_symbol: str) -> MarketProfile:
     symbol = _parse_symbol(vt_symbol)
 
     if exchange in CN_FUTURES_EXCHANGES:
+        symbol = _parse_symbol(vt_symbol)
+        root = "".join(c for c in symbol if not c.isdigit())
+        if exchange == "CFFEX" and root in {"IF", "IH", "IC", "IM"}:
+            end_hour, end_minute = 15, 0
+        elif exchange == "CFFEX" and root in {"T", "TF", "TS", "TL"}:
+            end_hour, end_minute = 15, 15
+        else:
+            end_hour, end_minute = 14, 59
         return MarketProfile(
-            daily_end_hour=14,
-            daily_end_minute=59,
+            daily_end_hour=end_hour,
+            daily_end_minute=end_minute,
             close_on_date_change=False,
             rollover_after_end_time=True,
             market_tz="Asia/Shanghai",
@@ -375,9 +375,9 @@ class SessionDailyBarGenerator:
 # =============================================================================
 # 策略主类 - 负责交易执行与UI交互 (TargetPosTemplate)
 # =============================================================================
-class ConsecutiveDownDaysStrategy(TargetPosTemplate):
+class RsiMeanReversionStrategy(TargetPosTemplate):
     """
-    连续下跌反转策略主类
+    RSI均值回归策略主类
     
     职责:
     - 接收行情数据 (on_tick/on_bar)
@@ -387,99 +387,97 @@ class ConsecutiveDownDaysStrategy(TargetPosTemplate):
     - 更新UI变量 (put_event)
     
     交易逻辑:
-    - 入场: 连续N日下跌 + 价格在均线之上 + RSI(2)超卖
-    - 出场: RSI超买或趋势反转
+    - 入场: RSI超卖做多
+    - 出场: RSI超买平仓
     """
     
     author = "Raymond Hsiao (refactored)"
-    
-    # === 策略参数 (可在UI中调整) ===
-    consecutive_days = 3          # 连续下跌天数
-    trend_period = 200          # 趋势均线周期
-    rsi_period = 2              # RSI计算周期
-    rsi_overbought = 70         # RSI超买阈值
-    fixed_size = 1              # 固定交易手数
-    tick_add = 0                # 目标仓位模板的价格偏移
-    auto_daily_end = True
-    daily_end_minute = 59       # 日线结束分钟
-    
-    parameters = [
-        "consecutive_days",
-        "trend_period",
-        "rsi_period",
-        "rsi_overbought",
-        "fixed_size",
-        "tick_add",
-        "auto_daily_end",
-        "daily_end_minute"]
-    # ==== 参数分类 ==========
-    # 信号参数：影响开平仓交易信号的生成
-    signal_parameters = [
-        "consecutive_days",
-        "trend_period",
-        "rsi_period",
-        "rsi_overbought",
-        "auto_daily_end",
-        "daily_end_minute"]
-    # 仓位参数：只影响仓位大小和下单执行方式
-    position_parameters = [
-        "fixed_size",
-        "tick_add"]
 
+    rsi_window = 14
+    rsi_buy_threshold = 30
+    rsi_sell_threshold = 70
+    rsi_exit_mean = 50
+    atr_window = 14
+    sl_atr_multiplier = 2.0
+    risk_percent = 0.02
+    capital = 1_000_000
+    contract_size = 300
+    auto_daily_end = True
+    daily_end_hour = 14
+    daily_end_minute = 59
+
+    parameters = [
+        "rsi_window",
+        "rsi_buy_threshold",
+        "rsi_sell_threshold",
+        "rsi_exit_mean",
+        "atr_window",
+        "sl_atr_multiplier",
+        "risk_percent",
+        "capital",
+        "contract_size"]
+
+    signal_parameters = [
+        "rsi_window",
+        "rsi_buy_threshold",
+        "rsi_sell_threshold",
+        "rsi_exit_mean",
+        "atr_window",
+        "sl_atr_multiplier",
+        "risk_percent",
+        "capital",
+        "contract_size"]
+    position_parameters = [
+        "auto_daily_end",
+        "daily_end_hour",
+        "daily_end_minute"]
+
+    # === 运行变量 (UI 可见) ===
+    target_pos: int = 0                     # 目标仓位
+    rsi_value: float = 0.0                  # 当前RSI值
+    atr_value: float = 0.0                  # 当前ATR值
+    entry_price: float = 0.0                # 入场价格
+    current_stop: float = 0.0               # 当前止损价
+    trade_size: int = 0                     # 交易手数
     
-    # === 运行变量 (UI 可见，用于监控) ===
-    target_pos: int = 0             # 目标仓位
-    rsi_value: float = 0.0      # 当前RSI值
-    sma_value: float = 0.0      # 当前均线值
-    consecutive_count: int = 0  # 当前连续下跌计数
-    trading_signal: str = ""    # 交易信号 (BUY/SELL/HOLD)
-    
-    variables = [ "rsi_value", "sma_value", "consecutive_count", "trading_signal"]
+    variables = [ "rsi_value", "atr_value", "entry_price", "current_stop", "trade_size"]
 
     def __init__(self, cta_engine, strategy_name: str, vt_symbol: str, setting: dict):
-        """
-        策略初始化
-        
-        Args:
-            cta_engine: CTA引擎实例
-            strategy_name: 策略名称
-            vt_symbol: 合约代码 (如 "SPY.SMART")
-            setting: 参数字典
-        """
         super().__init__(cta_engine, strategy_name, vt_symbol, setting)
-        
-        # 创建Bar生成器（分钟级→日线）
         self.bg = BarGenerator(self.on_bar)
-        
-        # 记录品种信息
+
         key = get_product_name(vt_symbol)
         contract_size = cta_engine.get_size(self)
-        self.write_log(f"[初始化] 品种: {key}, 合约乘数: {contract_size}, 参数: {setting}")
-        
-        # 创建信号处理器（三层架构核心）
-        self.signal = ConsecutiveDownDaysSignal(
+        if contract_size and "contract_size" not in setting:
+            self.contract_size = contract_size
+        self.write_log(
+            f"[初始化] 品种: {key}, 合约乘数: {self.contract_size}, 参数: {setting}"
+        )
+
+        self.signal = RsiMeanReversionSignal(
             vt_symbol=vt_symbol,
-            consecutive_days=self.consecutive_days,
-            trend_period=self.trend_period,
-            rsi_period=self.rsi_period,
-            rsi_overbought=self.rsi_overbought,
-            fixed_size=self.fixed_size,
+            rsi_window=self.rsi_window,
+            rsi_buy_threshold=self.rsi_buy_threshold,
+            rsi_sell_threshold=self.rsi_sell_threshold,
+            rsi_exit_mean=self.rsi_exit_mean,
+            atr_window=self.atr_window,
+            sl_atr_multiplier=self.sl_atr_multiplier,
+            risk_percent=self.risk_percent,
+            capital=self.capital,
+            contract_size=self.contract_size,
+            auto_daily_end=self.auto_daily_end,
+            daily_end_hour=self.daily_end_hour,
             daily_end_minute=self.daily_end_minute,
         )
         self.target_pos = 0
         self.am = self.signal.factor.am
-        
-        # 内部状态追踪
-        self.daily_bar_count: int = 0
-        self.last_minute_dt: Optional[datetime] = None
-        self.last_daily_dt: Optional[datetime] = None
 
     def on_init(self):
         profile = resolve_market_profile(
             vt_symbol=self.vt_symbol,
             auto_daily_end=self.auto_daily_end,
-            daily_end_hour=getattr(self, 'daily_end_hour', None),
-            daily_end_minute=getattr(self, 'daily_end_minute', None),
+            daily_end_hour=self.daily_end_hour,
+            daily_end_minute=self.daily_end_minute,
         )
         end_time = time(profile.daily_end_hour, profile.daily_end_minute)
         self.write_log(
@@ -495,138 +493,58 @@ class ConsecutiveDownDaysStrategy(TargetPosTemplate):
         )
 
     def on_start(self):
-        """策略启动：开始接收行情并交易"""
-        self.write_log(f"[策略启动] {self.__class__.__name__} 已启动")
-        self.put_event()
+        self.write_log("[on_start] 策略启动")
 
     def on_stop(self):
-        """策略停止：清理状态并记录"""
-        self.write_log(f"[策略停止] 当前持仓: {self.pos}")
+        self.write_log(f"[on_stop] 策略停止，当前持仓: {self.pos}")
 
     def on_tick(self, tick: TickData) -> None:
-        """Tick数据推送：更新Bar生成器"""
         super().on_tick(tick)
         self.bg.update_tick(tick)
 
     def on_bar(self, bar: BarData) -> None:
-        """
-        Bar数据推送（策略主循环）
-        
-        执行流程:
-        1. 如果是分钟数据，更新日线生成器
-        2. 如果是日线数据，触发交易逻辑
-        3. 更新UI监控变量
-        4. 记录日志
-        5. 刷新UI事件
-        """
         super().on_bar(bar)
-        if bar.interval == Interval.DAILY:
-            self.on_daily_bar(bar)
-        else:
-            self.last_minute_dt = bar.datetime
-            # 将分钟数据传递给信号处理器合成日线
-            self.signal.on_bar(bar)
-
-    def on_daily_bar(self, bar: BarData) -> None:
-        """
-        日线Bar推送（策略实际交易周期）
         
-        这是策略的核心交易循环，每根日线到达时执行:
-        1. 更新技术指标并计算目标仓位
-        2. 根据目标仓位发送交易指令
-        3. 刷新UI事件
-        """
-        self.daily_bar_count += 1
-        self.last_daily_dt = bar.datetime
-        
-        dt_str = bar.datetime.strftime('%Y-%m-%d')
-        
-        # 记录日线到达日志（实盘运维关键信息）
-        self.write_log(
-            f"[日线到达] #{self.daily_bar_count} | "
-            f"日期={dt_str} | "
-            f"O={bar.open_price:.2f} H={bar.high_price:.2f} "
-            f"L={bar.low_price:.2f} C={bar.close_price:.2f} | "
-            f"V={bar.volume}"
-        )
-        
-        # 保存上一周期目标仓位用于对比
         prev_target = self.target_pos
-        
-        # 计算目标仓位（委托给 Signal 处理）
+        prev_stop = self.current_stop
         self.calculate_targets(bar)
         
-        # 从 Signal/Factor 更新UI监控变量
-        self._update_ui_variables()
+        # 更新UI变量
+        self.rsi_value = self.signal.factor.rsi_value
+        self.atr_value = self.signal.factor.atr_value
+        self.trade_size = self.signal.factor.trade_size
         
-        # 检查信号变化并记录详细日志
+        # 检查信号变化并记录日志
+        dt_str = bar.datetime.strftime('%Y-%m-%d %H:%M:%S')
         if self.target_pos != prev_target:
-            self._log_signal_change(dt_str, bar, prev_target)
+            if self.target_pos > 0:
+                self.write_log(f"[{dt_str}] [日线-信号] RSI超卖做多 | RSI: {self.rsi_value:.1f} < {self.rsi_buy_threshold}, 手数: {self.trade_size}")
+            elif self.target_pos < 0:
+                self.write_log(f"[{dt_str}] [日线-信号] RSI超买做空 | RSI: {self.rsi_value:.1f} > {self.rsi_sell_threshold}, 手数: {self.trade_size}")
+            else:
+                is_stop_loss = (prev_target > 0 and bar.close_price <= prev_stop) or (prev_target < 0 and bar.close_price >= prev_stop)
+                exit_reason = "止损" if is_stop_loss else "RSI回归均值"
+                self.write_log(f"[{dt_str}] [日线-信号] 平仓 | 原因: {exit_reason}, RSI: {self.rsi_value:.1f}")
         
-        # 执行交易
         self.set_target_pos(self.target_pos)
         self.put_event()
 
-    def _update_ui_variables(self):
-        """更新UI监控变量（从 Signal/Factor 获取）"""
-        factor = self.signal.factor
-        self.rsi_value = factor.rsi_value
-        self.sma_value = factor.sma_value
-        self.consecutive_count = factor.consecutive_count
-
-    def _log_signal_change(self, dt_str: str, bar: BarData, prev_target: int):
-        """
-        记录信号变化日志
-        
-        实盘运维关键日志，用于:
-        - 追踪策略决策过程
-        - 排查异常交易
-        - 验证策略逻辑是否正确执行
-        """
-        factor = self.signal.factor
-        
-        if self.target_pos > 0:
-            self.trading_signal = "BUY"
-            self.write_log(
-                f"[{dt_str}] [信号变化] 做多入场 | "
-                f"连续下跌={factor.consecutive_count}天 | "
-                f"RSI({self.rsi_period})={factor.rsi_value:.2f} | "
-                f"SMA({self.trend_period})={factor.sma_value:.2f} | "
-                f"价格={bar.close_price:.2f} | "
-                f"prev_target={prev_target} → target_pos={self.target_pos}"
-            )
-        elif self.target_pos == 0 and prev_target > 0:
-            self.trading_signal = "EXIT_LONG"
-            self.write_log(
-                f"[{dt_str}] [信号变化] 平多出场 | "
-                f"RSI({self.rsi_period})={factor.rsi_value:.2f} > {self.rsi_overbought} | "
-                f"价格={bar.close_price:.2f} | "
-                f"prev_target={prev_target} → target_pos={self.target_pos}"
-            )
-        else:
-            self.trading_signal = "HOLD"
-
     def calculate_targets(self, bar: BarData) -> None:
-        """
-        计算目标仓位
-        
-        委托给 Signal 处理，实现策略逻辑与交易执行的分离。
-        Signal 内部会调用 Factor 计算指标，然后根据指标值判断交易信号。
-        """
         self.signal.on_bar(bar)
         self.target_pos = self.signal.get_target()
+        
+        # 更新持仓状态
+        if self.target_pos != 0:
+            self.entry_price = self.signal.factor.entry_price
+            self.current_stop = self.signal.factor.current_stop
+        else:
+            self.entry_price = 0.0
+            self.current_stop = 0.0
 
     def on_trade(self, trade: TradeData) -> None:
         """
         成交回调
-        
-        实盘运维关键日志，记录每笔成交详情:
-        - 成交方向（多/空）
-        - 开平类型（开/平）
-        - 成交价格和数量
-        - 最新持仓
         """
-        # 碎单处理（防止浮点精度问题）
         if abs(self.pos) <= 1e-7:
             self.write_log(f"[碎单处理] 持仓量 {self.pos} 清零")
             self.pos = 0
@@ -644,252 +562,200 @@ class ConsecutiveDownDaysStrategy(TargetPosTemplate):
         self.put_event()
 
     def on_order(self, order: OrderData) -> None:
-        """委托回调（当前策略不处理）"""
         super().on_order(order)
 
 
 # =============================================================================
 # 信号类 - 封装交易逻辑
 # =============================================================================
-class ConsecutiveDownDaysSignal:
+class RsiMeanReversionSignal:
     """
-    连续下跌反转信号处理器
+    RSI均值回归策略信号处理器
     
     职责:
     - 接收Bar数据（分钟级或日线）
     - 调用 Factor 计算技术指标
     - 根据指标值生成交易信号 (target)
-    - 管理持仓状态
     
     信号逻辑:
-    - 入场: 连续N日下跌 + 价格在均线之上
-    - 出场: RSI超买
+    - 入场: RSI超卖做多
+    - 出场: RSI超买平仓
     """
-    
     def __init__(
         self,
         vt_symbol: str,
-        consecutive_days: int,
-        trend_period: int,
-        rsi_period: int,
-        rsi_overbought: float,
-        fixed_size: int,
+        rsi_window: int,
+        rsi_buy_threshold: int,
+        rsi_sell_threshold: int,
+        rsi_exit_mean: int,
+        atr_window: int,
+        sl_atr_multiplier: float,
+        risk_percent: float,
+        capital: int,
+        contract_size: int,
+        auto_daily_end: bool,
+        daily_end_hour: int,
         daily_end_minute: int,
+        fixed_size: int = None,
     ) -> None:
-        """
-        初始化信号处理器
-        
-        Args:
-            vt_symbol: 合约代码
-            consecutive_days: 连续下跌天数阈值
-            trend_period: 趋势均线周期
-            rsi_period: RSI计算周期
-            rsi_overbought: RSI超买阈值
-            fixed_size: 固定交易手数
-            daily_end_minute: 日线结束分钟
-        """
         self.vt_symbol = vt_symbol
-        self.consecutive_days = consecutive_days
-        self.trend_period = trend_period
-        self.rsi_period = rsi_period
-        self.rsi_overbought = rsi_overbought
-        self.fixed_size = fixed_size
+        self.rsi_window = rsi_window
+        self.rsi_buy_threshold = rsi_buy_threshold
+        self.rsi_sell_threshold = rsi_sell_threshold
+        self.rsi_exit_mean = rsi_exit_mean
+        self.atr_window = atr_window
+        self.sl_atr_multiplier = sl_atr_multiplier
+        self.risk_percent = risk_percent
+        self.capital = capital
+        self.contract_size = contract_size
+        self.auto_daily_end = auto_daily_end
+        self.daily_end_hour = daily_end_hour
         self.daily_end_minute = daily_end_minute
-        
+        self.fixed_size = fixed_size
+
         self.target = 0
-        
-        # 创建因子计算器（核心指标计算）
-        self.factor = ConsecutiveDownDaysFactor(
-            vt_symbol=vt_symbol,
-            consecutive_days=consecutive_days,
-            trend_period=trend_period,
-            rsi_period=rsi_period,
-            rsi_overbought=rsi_overbought,
-            fixed_size=fixed_size,
-            daily_end_minute=daily_end_minute,
+
+        self.factor = RsiMeanReversionFactor(
+            rsi_window=self.rsi_window,
+            rsi_buy_threshold=self.rsi_buy_threshold,
+            rsi_sell_threshold=self.rsi_sell_threshold,
+            rsi_exit_mean=self.rsi_exit_mean,
+            atr_window=self.atr_window,
+            sl_atr_multiplier=self.sl_atr_multiplier,
+            risk_percent=self.risk_percent,
+            capital=self.capital,
+            contract_size=self.contract_size,
+            auto_daily_end=self.auto_daily_end,
+            daily_end_hour=self.daily_end_hour,
+            daily_end_minute=self.daily_end_minute,
+            fixed_size=self.fixed_size,
         )
 
     def on_bar(self, bar: BarData) -> None:
-        """
-        处理分钟Bar数据
-        
-        将分钟数据传递给 Factor 的日线生成器合成日线
-        """
         self.factor.on_bar(bar)
         self.target = self.factor.get_target()
 
-    def on_daily_bar(self, bar: BarData) -> None:
-        """
-        处理日线Bar数据
-        
-        直接传递给 Factor 处理
-        """
-        self.factor.on_daily_bar(bar)
-        self.target = self.factor.get_target()
-
     def get_target(self) -> int:
-        """获取当前目标仓位"""
         return int(self.target)
 
 
 # =============================================================================
 # 因子类 - 封装指标计算
 # =============================================================================
-class ConsecutiveDownDaysFactor:
+class RsiMeanReversionFactor:
     """
-    连续下跌反转因子计算器
+    RSI均值回归策略因子计算器
     
     职责:
     - 管理ArrayManager（K线数据缓存）
-    - 计算技术指标 (SMA, RSI)
+    - 计算技术指标
     - 判断交易信号
-    - 管理持仓状态变量
-    
-    指标说明:
-    - SMA(trend_period): 简单移动平均线，用于趋势过滤
-    - RSI(rsi_period): 相对强弱指标，用于入场/出场确认
-    - 连续下跌: 连续N日收盘价低于前一日
     """
-    
     def __init__(
         self,
-        vt_symbol: str,
-        consecutive_days: int,
-        trend_period: int,
-        rsi_period: int,
-        rsi_overbought: float,
-        fixed_size: int,
+        rsi_window: int,
+        rsi_buy_threshold: int,
+        rsi_sell_threshold: int,
+        rsi_exit_mean: int,
+        atr_window: int,
+        sl_atr_multiplier: float,
+        risk_percent: float,
+        capital: int,
+        contract_size: int,
+        auto_daily_end: bool,
+        daily_end_hour: int,
         daily_end_minute: int,
+        fixed_size: int = None,
     ) -> None:
-        """
-        初始化因子计算器
-        
-        Args:
-            consecutive_days: 连续下跌天数阈值
-            trend_period: 趋势均线周期
-            rsi_period: RSI计算周期
-            rsi_overbought: RSI超买阈值
-            fixed_size: 固定交易手数
-            daily_end_minute: 日线结束分钟
-        """
-        self.vt_symbol = vt_symbol
-        self.consecutive_days = consecutive_days
-        self.trend_period = trend_period
-        self.rsi_period = rsi_period
-        self.rsi_overbought = rsi_overbought
-        self.fixed_size = fixed_size
+        self.rsi_window = rsi_window
+        self.rsi_buy_threshold = rsi_buy_threshold
+        self.rsi_sell_threshold = rsi_sell_threshold
+        self.rsi_exit_mean = rsi_exit_mean
+        self.atr_window = atr_window
+        self.sl_atr_multiplier = sl_atr_multiplier
+        self.risk_percent = risk_percent
+        self.capital = capital
+        self.contract_size = contract_size
+        self.auto_daily_end = auto_daily_end
+        self.daily_end_hour = daily_end_hour
         self.daily_end_minute = daily_end_minute
-        
-        # 状态变量
+        self.fixed_size = fixed_size
+
+        # UI变量
+        self.rsi_value = 0.0
+        self.atr_value = 0.0
+        self.entry_price = 0.0
+        self.current_stop = 0.0
+        self.trade_size = 0
         self.target = 0
-        self.rsi_value: float = 0.0      # 当前RSI值
-        self.sma_value: float = 0.0      # 当前均线值
-        self.consecutive_count: int = 0  # 当前连续下跌计数
-        
-        # 创建K线数据管理器
-        # 大小取最大指标周期 + 缓冲
-        size = max(trend_period, rsi_period, consecutive_days) + 50
+
+        size = max(rsi_window, atr_window) + 50
         self.am = ArrayManager(size=size)
-        
-        # 创建日线Bar生成器（用于分钟级数据合成日线）
         self.daily_bg = SessionDailyBarGenerator(
             on_daily_bar=self.on_daily_bar,
-            vt_symbol=self.vt_symbol,
-            auto_daily_end=True,
+            vt_symbol="",
+            auto_daily_end=self.auto_daily_end,
+            daily_end_hour=self.daily_end_hour,
             daily_end_minute=self.daily_end_minute,
         )
 
     def on_bar(self, bar: BarData) -> None:
-        """
-        处理Bar数据
-        
-        如果是日线数据直接处理，
-        如果是分钟数据则合成日线后处理
-        """
         if bar.interval == Interval.DAILY:
             self.on_daily_bar(bar)
         else:
             self.daily_bg.update_bar(bar)
+            
+            # Intraday stop loss check
+            if self.target > 0 and bar.close_price <= self.current_stop:
+                self.target = 0
+            elif self.target < 0 and bar.close_price >= self.current_stop:
+                self.target = 0
 
     def on_daily_bar(self, bar: BarData) -> None:
-        """
-        处理日线数据（策略实际交易周期）
-        
-        这是策略的核心计算逻辑，包括:
-        1. 更新K线数据到ArrayManager
-        2. 计算技术指标 (SMA, RSI)
-        3. 判断连续下跌
-        4. 根据持仓状态和指标值判断交易信号
-        5. 更新持仓状态
-        """
-        # 更新K线数据
         self.am.update_bar(bar)
-        
-        # 数据未预热完成，不计算信号
         if not self.am.inited:
             return
-        
-        # === 指标计算 ===
-        close = self.am.close
-        
-        # 1. 计算趋势均线
-        sma = self.am.sma(self.trend_period, array=True)
-        self.sma_value = sma[-1]
-        
-        # 2. 计算RSI
-        rsi = self.am.rsi(self.rsi_period, array=True)
-        self.rsi_value = rsi[-1]
-        
-        # 3. 判断连续下跌
-        self.consecutive_count = 0
-        for i in range(1, self.consecutive_days + 1):
-            if close[-i] < close[-i - 1]:
-                self.consecutive_count += 1
-            else:
-                break
-        
-        # === 交易信号判断 ===
-        if self.target > 0:
-            # === 持仓状态：检查出场条件 ===
-            # 出场条件1: RSI超买
-            cond_exit_1 = rsi[-self.rsi_period] > self.rsi_overbought
-            
-            if cond_exit_1:
+
+        self.rsi_value = self.am.rsi(self.rsi_window)
+        self.atr_value = self.am.atr(self.atr_window)
+
+        if self.target == 0:
+            if self.rsi_value < self.rsi_buy_threshold or self.rsi_value > self.rsi_sell_threshold:
+                sl_dist = self.atr_value * self.sl_atr_multiplier
+                if self.fixed_size is not None:
+                    size = self.fixed_size
+                else:
+                    size = 1
+                    if sl_dist > 0:
+                        risk_amount = self.capital * self.risk_percent
+                        raw_size = risk_amount / (sl_dist * self.contract_size)
+                        size = max(1, int(raw_size))
+                self.trade_size = size
+                if self.rsi_value < self.rsi_buy_threshold:
+                    self.target = size
+                    self.entry_price = bar.close_price
+                    self.current_stop = self.entry_price - sl_dist
+                else:
+                    self.target = -size
+                    self.entry_price = bar.close_price
+                    self.current_stop = self.entry_price + sl_dist
+        elif self.target > 0:
+            sl_dist = self.atr_value * self.sl_atr_multiplier
+            new_stop = bar.close_price - sl_dist
+            self.current_stop = max(self.current_stop, new_stop)
+            if self.rsi_value > self.rsi_exit_mean:
                 self.target = 0
-            else:
-                # 继续持有
-                self.target = self.target
-                
-        elif self.target == 0:
-            # === 空仓状态：检查入场条件 ===
-            # 入场条件1: 连续N日下跌
-            cond_1 = all(
-                close[-i] < close[-i - 1]
-                for i in range(1, self.consecutive_days + 1)
-            )
-            
-            # 入场条件2: 价格在均线之上（趋势过滤）
-            cond_2 = close[-1] > sma[-1]
-            
-            if cond_1 and cond_2:
-                self.target = self.fixed_size
-            else:
+        elif self.target < 0:
+            sl_dist = self.atr_value * self.sl_atr_multiplier
+            new_stop = bar.close_price + sl_dist
+            self.current_stop = min(self.current_stop, new_stop)
+            if self.rsi_value < self.rsi_exit_mean:
                 self.target = 0
 
     def get_target(self) -> int:
-        """获取当前目标仓位"""
         return self.target
 
 
-# =============================================================================
-# 工具函数
-# =============================================================================
 def get_product_name(vt_symbol: str) -> str:
-    """
-    从合约代码提取品种名称（去除数字部分）
-    
-    例如: "IF2406.CFFEX" → "IF"
-          "SPY.SMART" → "SPY"
-    """
     symbol = "".join(w for w in vt_symbol.split(".")[0] if not w.isdigit())
     return symbol.upper()

@@ -1,0 +1,38 @@
+{
+  "cn_IH2607_CFFEX_RSIMEANREVERSION_daily": {
+    "class_name": "RsiMeanReversionEnsembleStrategy",
+    "vt_symbol": "IH2607.CFFEX",
+    "setting": {
+      "rsi_window": 14,
+      "atr_window": 14,
+      "sl_atr_multiplier": 2.0,
+      "risk_percent": 0.02,
+      "capital": 5000000,
+      "contract_size": 300,
+      "auto_daily_end": true,
+      "daily_end_hour": 15,
+      "daily_end_minute": 0,
+      "ensemble_mode": "soft_vote",
+      "max_lots": 1,
+      "ensemble_params": "[{\"rsi_buy_threshold\": 26, \"rsi_sell_threshold\": 88, \"rsi_exit_mean\": 50, \"rsi_window\": 14, \"atr_window\": 14}, {\"rsi_buy_threshold\": 20, \"rsi_sell_threshold\": 88, \"rsi_exit_mean\": 50, \"rsi_window\": 14, \"atr_window\": 14}, {\"rsi_buy_threshold\": 26, \"rsi_sell_threshold\": 88, \"rsi_exit_mean\": 62, \"rsi_window\": 14, \"atr_window\": 14}, {\"rsi_buy_threshold\": 26, \"rsi_sell_threshold\": 88, \"rsi_exit_mean\": 56, \"rsi_window\": 14, \"atr_window\": 14}, {\"rsi_buy_threshold\": 20, \"rsi_sell_threshold\": 88, \"rsi_exit_mean\": 62, \"rsi_window\": 14, \"atr_window\": 14}]"
+    }
+  },
+  "cn_T2609_CFFEX_RSIMEANREVERSION_daily": {
+    "class_name": "RsiMeanReversionEnsembleStrategy",
+    "vt_symbol": "T2609.CFFEX",
+    "setting": {
+      "rsi_window": 14,
+      "atr_window": 14,
+      "sl_atr_multiplier": 2.0,
+      "risk_percent": 0.02,
+      "capital": 5000000,
+      "contract_size": 10000,
+      "auto_daily_end": true,
+      "daily_end_hour": 15,
+      "daily_end_minute": 15,
+      "ensemble_mode": "hard_vote_3",
+      "max_lots": 5,
+      "ensemble_params": "[{\"rsi_buy_threshold\": 35, \"rsi_sell_threshold\": 94, \"rsi_exit_mean\": 47, \"rsi_window\": 14, \"atr_window\": 14}, {\"rsi_buy_threshold\": 35, \"rsi_sell_threshold\": 88, \"rsi_exit_mean\": 47, \"rsi_window\": 14, \"atr_window\": 14}, {\"rsi_buy_threshold\": 32, \"rsi_sell_threshold\": 88, \"rsi_exit_mean\": 47, \"rsi_window\": 14, \"atr_window\": 14}, {\"rsi_buy_threshold\": 32, \"rsi_sell_threshold\": 94, \"rsi_exit_mean\": 47, \"rsi_window\": 14, \"atr_window\": 14}, {\"rsi_buy_threshold\": 35, \"rsi_sell_threshold\": 94, \"rsi_exit_mean\": 44, \"rsi_window\": 14, \"atr_window\": 14}]"
+    }
+  }
+}
