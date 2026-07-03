@@ -3,8 +3,9 @@ RSI均值回归策略 (自包含版)
 =========================================================
 
 交易逻辑:
-- 入场: RSI超卖做多
-- 出场: RSI超买平仓
+- 入场: RSI < rsi_buy_threshold 做多; RSI > rsi_sell_threshold 做空
+- 出场: 持仓方向上的 RSI 回归 rsi_exit_mean 时平仓
+- 止损: ATR 跟踪止损
 
 架构说明:
     Strategy (TargetPosTemplate) -> Signal (交易逻辑) -> Factor (指标计算)
@@ -415,7 +416,10 @@ class RsiMeanReversionStrategy(TargetPosTemplate):
         "sl_atr_multiplier",
         "risk_percent",
         "capital",
-        "contract_size"]
+        "contract_size",
+        "auto_daily_end",
+        "daily_end_hour",
+        "daily_end_minute"]
 
     signal_parameters = [
         "rsi_window",
@@ -426,8 +430,7 @@ class RsiMeanReversionStrategy(TargetPosTemplate):
         "sl_atr_multiplier",
         "risk_percent",
         "capital",
-        "contract_size"]
-    position_parameters = [
+        "contract_size",
         "auto_daily_end",
         "daily_end_hour",
         "daily_end_minute"]
@@ -616,6 +619,7 @@ class RsiMeanReversionSignal:
         self.target = 0
 
         self.factor = RsiMeanReversionFactor(
+            vt_symbol=self.vt_symbol,
             rsi_window=self.rsi_window,
             rsi_buy_threshold=self.rsi_buy_threshold,
             rsi_sell_threshold=self.rsi_sell_threshold,
@@ -653,6 +657,7 @@ class RsiMeanReversionFactor:
     """
     def __init__(
         self,
+        vt_symbol: str,
         rsi_window: int,
         rsi_buy_threshold: int,
         rsi_sell_threshold: int,
@@ -667,6 +672,7 @@ class RsiMeanReversionFactor:
         daily_end_minute: int,
         fixed_size: int = None,
     ) -> None:
+        self.vt_symbol = vt_symbol
         self.rsi_window = rsi_window
         self.rsi_buy_threshold = rsi_buy_threshold
         self.rsi_sell_threshold = rsi_sell_threshold
@@ -693,7 +699,7 @@ class RsiMeanReversionFactor:
         self.am = ArrayManager(size=size)
         self.daily_bg = SessionDailyBarGenerator(
             on_daily_bar=self.on_daily_bar,
-            vt_symbol="",
+            vt_symbol=vt_symbol,
             auto_daily_end=self.auto_daily_end,
             daily_end_hour=self.daily_end_hour,
             daily_end_minute=self.daily_end_minute,
