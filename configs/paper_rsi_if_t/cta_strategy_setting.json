@@ -3,10 +3,10 @@
     "class_name": "RsiMeanReversionStrategy",
     "vt_symbol": "IF2607.CFFEX",
     "setting": {
-      "rsi_window": 14,
       "rsi_buy_threshold": 19,
       "rsi_sell_threshold": 85,
       "rsi_exit_mean": 65,
+      "rsi_window": 14,
       "atr_window": 14,
       "sl_atr_multiplier": 2.0,
       "risk_percent": 0.02,
@@ -22,10 +22,10 @@
     "class_name": "RsiMeanReversionStrategy",
     "vt_symbol": "T2609.CFFEX",
     "setting": {
-      "rsi_window": 14,
       "rsi_buy_threshold": 35,
       "rsi_sell_threshold": 94,
       "rsi_exit_mean": 47,
+      "rsi_window": 14,
       "atr_window": 14,
       "sl_atr_multiplier": 2.0,
       "risk_percent": 0.02,
