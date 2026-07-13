@@ -1,5 +1,5 @@
 {
-  "cn_IF2607_CFFEX_LIMITEDDUALTHRUST_daily_E1": {
+  "cn_IF2607_CFFEX_LIMITEDDUALTHRUST_minute_E1": {
     "class_name": "LimitedDualThrustStrategy",
     "vt_symbol": "IF2607.CFFEX",
     "setting": {
@@ -22,7 +22,7 @@
       "daily_end_minute": 0
     }
   },
-  "cn_IF2607_CFFEX_LIMITEDDUALTHRUST_daily_E2": {
+  "cn_IF2607_CFFEX_LIMITEDDUALTHRUST_minute_E2": {
     "class_name": "LimitedDualThrustStrategy",
     "vt_symbol": "IF2607.CFFEX",
     "setting": {
@@ -45,7 +45,7 @@
       "daily_end_minute": 0
     }
   },
-  "cn_IC2607_CFFEX_LIMITEDDUALTHRUST_daily_E1": {
+  "cn_IC2607_CFFEX_LIMITEDDUALTHRUST_minute_E1": {
     "class_name": "LimitedDualThrustStrategy",
     "vt_symbol": "IC2607.CFFEX",
     "setting": {
@@ -68,7 +68,7 @@
       "daily_end_minute": 0
     }
   },
-  "cn_IC2607_CFFEX_LIMITEDDUALTHRUST_daily_E2": {
+  "cn_IC2607_CFFEX_LIMITEDDUALTHRUST_minute_E2": {
     "class_name": "LimitedDualThrustStrategy",
     "vt_symbol": "IC2607.CFFEX",
     "setting": {
@@ -91,7 +91,7 @@
       "daily_end_minute": 0
     }
   },
-  "cn_IM2607_CFFEX_LIMITEDDUALTHRUST_daily_E1": {
+  "cn_IM2607_CFFEX_LIMITEDDUALTHRUST_minute_E1": {
     "class_name": "LimitedDualThrustStrategy",
     "vt_symbol": "IM2607.CFFEX",
     "setting": {
@@ -114,7 +114,7 @@
       "daily_end_minute": 0
     }
   },
-  "cn_IM2607_CFFEX_LIMITEDDUALTHRUST_daily_E2": {
+  "cn_IM2607_CFFEX_LIMITEDDUALTHRUST_minute_E2": {
     "class_name": "LimitedDualThrustStrategy",
     "vt_symbol": "IM2607.CFFEX",
     "setting": {
