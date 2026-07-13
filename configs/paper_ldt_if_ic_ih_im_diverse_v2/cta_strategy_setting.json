@@ -1,0 +1,140 @@
+{
+  "cn_IF2607_CFFEX_LIMITEDDUALTHRUST_daily_E1": {
+    "class_name": "LimitedDualThrustStrategy",
+    "vt_symbol": "IF2607.CFFEX",
+    "setting": {
+      "k1": 0.1,
+      "k2": 0.1,
+      "trailpercent": 1.0,
+      "range_cap": 1.0,
+      "exit_time_type": 1,
+      "need_lock": 1,
+      "fixed_size": 1,
+      "trade_limit": 30,
+      "rsi_window": 14,
+      "atr_window": 14,
+      "sl_atr_multiplier": 2.0,
+      "risk_percent": 0.02,
+      "capital": 5000000,
+      "contract_size": 300,
+      "auto_daily_end": true,
+      "daily_end_hour": 15,
+      "daily_end_minute": 0
+    }
+  },
+  "cn_IF2607_CFFEX_LIMITEDDUALTHRUST_daily_E2": {
+    "class_name": "LimitedDualThrustStrategy",
+    "vt_symbol": "IF2607.CFFEX",
+    "setting": {
+      "k1": 0.1,
+      "k2": 1.0,
+      "trailpercent": 0.75,
+      "range_cap": 1.0,
+      "exit_time_type": 1,
+      "need_lock": 1,
+      "fixed_size": 1,
+      "trade_limit": 30,
+      "rsi_window": 14,
+      "atr_window": 14,
+      "sl_atr_multiplier": 2.0,
+      "risk_percent": 0.02,
+      "capital": 5000000,
+      "contract_size": 300,
+      "auto_daily_end": true,
+      "daily_end_hour": 15,
+      "daily_end_minute": 0
+    }
+  },
+  "cn_IC2607_CFFEX_LIMITEDDUALTHRUST_daily_E1": {
+    "class_name": "LimitedDualThrustStrategy",
+    "vt_symbol": "IC2607.CFFEX",
+    "setting": {
+      "k1": 0.1,
+      "k2": 0.7,
+      "trailpercent": 0.25,
+      "range_cap": 2.0,
+      "exit_time_type": 1,
+      "need_lock": 1,
+      "fixed_size": 1,
+      "trade_limit": 30,
+      "rsi_window": 14,
+      "atr_window": 14,
+      "sl_atr_multiplier": 2.0,
+      "risk_percent": 0.02,
+      "capital": 5000000,
+      "contract_size": 200,
+      "auto_daily_end": true,
+      "daily_end_hour": 15,
+      "daily_end_minute": 0
+    }
+  },
+  "cn_IC2607_CFFEX_LIMITEDDUALTHRUST_daily_E2": {
+    "class_name": "LimitedDualThrustStrategy",
+    "vt_symbol": "IC2607.CFFEX",
+    "setting": {
+      "k1": 0.1,
+      "k2": 1.0,
+      "trailpercent": 0.75,
+      "range_cap": 1.0,
+      "exit_time_type": 1,
+      "need_lock": 1,
+      "fixed_size": 1,
+      "trade_limit": 30,
+      "rsi_window": 14,
+      "atr_window": 14,
+      "sl_atr_multiplier": 2.0,
+      "risk_percent": 0.02,
+      "capital": 5000000,
+      "contract_size": 200,
+      "auto_daily_end": true,
+      "daily_end_hour": 15,
+      "daily_end_minute": 0
+    }
+  },
+  "cn_IM2607_CFFEX_LIMITEDDUALTHRUST_daily_E1": {
+    "class_name": "LimitedDualThrustStrategy",
+    "vt_symbol": "IM2607.CFFEX",
+    "setting": {
+      "k1": 0.1,
+      "k2": 1.0,
+      "trailpercent": 0.25,
+      "range_cap": 2.0,
+      "exit_time_type": 1,
+      "need_lock": 1,
+      "fixed_size": 1,
+      "trade_limit": 30,
+      "rsi_window": 14,
+      "atr_window": 14,
+      "sl_atr_multiplier": 2.0,
+      "risk_percent": 0.02,
+      "capital": 5000000,
+      "contract_size": 200,
+      "auto_daily_end": true,
+      "daily_end_hour": 15,
+      "daily_end_minute": 0
+    }
+  },
+  "cn_IM2607_CFFEX_LIMITEDDUALTHRUST_daily_E2": {
+    "class_name": "LimitedDualThrustStrategy",
+    "vt_symbol": "IM2607.CFFEX",
+    "setting": {
+      "k1": 0.4,
+      "k2": 1.0,
+      "trailpercent": 1.0,
+      "range_cap": 3.0,
+      "exit_time_type": 1,
+      "need_lock": 1,
+      "fixed_size": 1,
+      "trade_limit": 30,
+      "rsi_window": 14,
+      "atr_window": 14,
+      "sl_atr_multiplier": 2.0,
+      "risk_percent": 0.02,
+      "capital": 5000000,
+      "contract_size": 200,
+      "auto_daily_end": true,
+      "daily_end_hour": 15,
+      "daily_end_minute": 0
+    }
+  }
+}
