@@ -1,7 +1,7 @@
 {
   "IF_LDT_E1": {
     "class_name": "LimitedDualThrustStrategy",
-    "vt_symbol": "IF2607.CFFEX",
+    "vt_symbol": "IF2608.CFFEX",
     "setting": {
       "k1": 0.1,
       "k2": 0.1,
@@ -15,7 +15,7 @@
   },
   "IF_LDT_E2": {
     "class_name": "LimitedDualThrustStrategy",
-    "vt_symbol": "IF2607.CFFEX",
+    "vt_symbol": "IF2608.CFFEX",
     "setting": {
       "k1": 0.1,
       "k2": 1.0,
@@ -29,7 +29,7 @@
   },
   "IC_LDT_E1": {
     "class_name": "LimitedDualThrustStrategy",
-    "vt_symbol": "IC2607.CFFEX",
+    "vt_symbol": "IC2608.CFFEX",
     "setting": {
       "k1": 0.1,
       "k2": 0.7,
@@ -43,40 +43,12 @@
   },
   "IC_LDT_E2": {
     "class_name": "LimitedDualThrustStrategy",
-    "vt_symbol": "IC2607.CFFEX",
+    "vt_symbol": "IC2608.CFFEX",
     "setting": {
       "k1": 0.1,
       "k2": 1.0,
       "trailpercent": 0.75,
       "range_cap": 1.0,
-      "exit_time_type": 1,
-      "need_lock": 1,
-      "fixed_size": 1,
-      "trade_limit": 30
-    }
-  },
-  "IM_LDT_E1": {
-    "class_name": "LimitedDualThrustStrategy",
-    "vt_symbol": "IM2607.CFFEX",
-    "setting": {
-      "k1": 0.1,
-      "k2": 1.0,
-      "trailpercent": 0.25,
-      "range_cap": 2.0,
-      "exit_time_type": 1,
-      "need_lock": 1,
-      "fixed_size": 1,
-      "trade_limit": 30
-    }
-  },
-  "IM_LDT_E2": {
-    "class_name": "LimitedDualThrustStrategy",
-    "vt_symbol": "IM2607.CFFEX",
-    "setting": {
-      "k1": 0.4,
-      "k2": 1.0,
-      "trailpercent": 1.0,
-      "range_cap": 3.0,
       "exit_time_type": 1,
       "need_lock": 1,
       "fixed_size": 1,
