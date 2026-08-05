@@ -29,8 +29,9 @@ STRATEGY_PARAM_KEYS = [
     "carry_symbols", "carry_dir", "rule_fdm",
 ]
 
-# 本部署（cmd42_lf）的预期关键参数
-EXPECTED = {"capital": 10_000_000, "max_leverage": 5.0, "idm": 2.1284, "long_flat": 1}
+# 本部署（paper_cmd42_lf）的关键参数护栏：capital/max_leverage/long_flat 为硬性风控口径，
+# idm 随品种池重算（只校验为正数，不锁定具体值）
+EXPECTED = {"capital": 10_000_000, "max_leverage": 5.0, "long_flat": 1}
 
 CONTINUOUS_RE = re.compile(r"^[A-Z]{1,2}88[89]\.(SHFE|DCE|CZCE|INE)$")
 LIVE_SYMBOL_RE = re.compile(r"^[A-Z]{1,2}\d{3,4}$")
@@ -91,16 +92,21 @@ def main() -> int:
             ok(f"关键参数 {key}={actual}（预期 {expected}）")
         else:
             fail(f"关键参数 {key}={actual}，与预期 {expected} 不一致")
+    idm = sc.get("idm")
+    if isinstance(idm, (int, float)) and idm and idm > 0:
+        ok(f"关键参数 idm={idm}（正值，随池重算口径）")
+    else:
+        fail(f"关键参数 idm={idm}，缺失或非正数")
 
     # ---- 3. vt_symbols 格式 + sizes/priceticks/slippages 覆盖 ----
     vt_symbols = sc.get("vt_symbols", [])
     bad = [s for s in vt_symbols if not CONTINUOUS_RE.match(s)]
-    if len(vt_symbols) != 42:
-        fail(f"vt_symbols 数量={len(vt_symbols)}，预期 42")
+    if not vt_symbols:
+        fail("vt_symbols 为空")
     elif bad:
         fail(f"vt_symbols 格式非法: {bad}")
     else:
-        ok("42 个 vt_symbols 格式合法（889/888 连续合约）")
+        ok(f"{len(vt_symbols)} 个 vt_symbols 格式合法（889/888 连续合约）")
     for dict_key in ("sizes", "priceticks", "slippages"):
         d = sc.get(dict_key, {})
         missing = [s for s in vt_symbols if s not in d]

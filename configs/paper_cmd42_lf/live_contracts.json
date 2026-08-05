@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-04T20:14:04",
+  "generated_at": "2026-08-05T09:34:57",
   "source": "rqdatac futures.get_dominant(rank=1)",
   "contracts": {
     "AU889.SHFE": {
@@ -58,13 +58,6 @@
       "live_symbol": "SN2609",
       "live_vt_symbol": "SN2609.SHFE"
     },
-    "RB889.SHFE": {
-      "root": "RB",
-      "exchange": "SHFE",
-      "continuous_code": "RB889",
-      "live_symbol": "RB2610",
-      "live_vt_symbol": "RB2610.SHFE"
-    },
     "HC889.SHFE": {
       "root": "HC",
       "exchange": "SHFE",
@@ -114,13 +107,6 @@
       "live_symbol": "M2701",
       "live_vt_symbol": "M2701.DCE"
     },
-    "Y889.DCE": {
-      "root": "Y",
-      "exchange": "DCE",
-      "continuous_code": "Y889",
-      "live_symbol": "Y2701",
-      "live_vt_symbol": "Y2701.DCE"
-    },
     "P889.DCE": {
       "root": "P",
       "exchange": "DCE",
@@ -142,13 +128,6 @@
       "live_symbol": "C2609",
       "live_vt_symbol": "C2609.DCE"
     },
-    "CS889.DCE": {
-      "root": "CS",
-      "exchange": "DCE",
-      "continuous_code": "CS889",
-      "live_symbol": "CS2609",
-      "live_vt_symbol": "CS2609.DCE"
-    },
     "I889.DCE": {
       "root": "I",
       "exchange": "DCE",
@@ -169,13 +148,6 @@
       "continuous_code": "JM889",
       "live_symbol": "JM2609",
       "live_vt_symbol": "JM2609.DCE"
-    },
-    "L889.DCE": {
-      "root": "L",
-      "exchange": "DCE",
-      "continuous_code": "L889",
-      "live_symbol": "L2609",
-      "live_vt_symbol": "L2609.DCE"
     },
     "PP889.DCE": {
       "root": "PP",
@@ -260,13 +232,6 @@
       "continuous_code": "OI889",
       "live_symbol": "OI2609",
       "live_vt_symbol": "OI2609.CZCE"
-    },
-    "RM889.CZCE": {
-      "root": "RM",
-      "exchange": "CZCE",
-      "continuous_code": "RM889",
-      "live_symbol": "RM2609",
-      "live_vt_symbol": "RM2609.CZCE"
     },
     "SA889.CZCE": {
       "root": "SA",

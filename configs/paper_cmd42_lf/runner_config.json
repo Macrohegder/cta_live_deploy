@@ -1,7 +1,7 @@
 {
   "account": "paper_cmd42_lf",
   "mode": "daily_batch_replay",
-  "strategy_config_path": "/root/quant/portfolio_strategy/configs/futures_carver_cmd42_lf.json",
+  "strategy_config_path": "/root/quant/portfolio_strategy/configs/futures_carver_cmd37_dedup.json",
   "strategy_module_path": "/root/quant/portfolio_strategy",
   "live_contracts_path": "configs/paper_cmd42_lf/live_contracts.json",
   "log_dir": "logs/portfolio_cmd42_lf",
