@@ -104,25 +104,18 @@ accounts:
   nav:
     name: "NAV主账户"
     portfolio_id: "NAV_PORTFOLIO"
-    total_capital: 136966
+    total_capital: 1883.40          # 2026-07-04 同步最新权益；账户已停止CTA运作，仅保留观察仓位
     base_currency: "USDT"
     position_multiplier: 1.0
-    strategies:
-      # 策略名称: 该账户的仓位倍数（相对于base_setting中的fixed_size）
-      CincoStrategy_ETH: 2.0        # 10 * 2 = 20
-      Kbins_MFI_70_ETH: 2.0        # 10 * 2 = 20
-      Kbins_ADX_90_ETH: 5.0        # 10 * 5 = 50
-      XauIntradayStrategy_XAU: 10.0 # 10 * 10 = 100
-      TripleRsiLongShort_BTC: 1.0   # 10 * 1 = 10
+    account_type: "dormant"         # 账户已停止CTA运作，仅保留观察仓位，不参与CTA实盘部署
+    strategies: {}                  # 不关联CTA策略
 
   # ----- LUYL 账户 -----
   luyl:
     name: "LUYL账户"
     portfolio_id: "LUYL_PORTFOLIO"
-    total_capital: 25000
+    total_capital: 54162.30
     base_currency: "USDT"
     position_multiplier: 1.0
-    strategies:
-      CincoStrategy_ETH: 3.0        # 10 * 3 = 30
-      Kbins_ADX_90_ETH: 3.0        # 10 * 3 = 30
-      Nr7BreakoutStrategy_XAU: 0.1  # 10 * 0.1 = 1
+    account_type: "funding_arbitrage"  # 纯资金费率套利账户，不参与CTA实盘部署
+    strategies: {}                       # 资金费套利为手动策略，不关联CTA策略

@@ -50,7 +50,7 @@ cta_live_deploy/
 ```
 cta_developer 批量回测 → 单策略最优参数
          ↓
-tracker 组合优化 → portfolio_opt_{account}.json（风险平价权重）
+portfolio_optimizer 组合优化 → portfolio_opt_{account}.json（风险平价权重）
          ↓
 build_deploy.py → 合并生成账户级配置 + 同步策略代码
          ↓
@@ -62,8 +62,8 @@ git commit + push → 远程仓库
 ## 配置规则
 
 1. **单策略参数**：来自 `cta_developer/cta_strategy_setting_{asset}.json`（OAT/GA 优化后的最优参数）
-2. **组合权重**：来自 `tracker/data/portfolio_opt_{account}.json`（风险平价 + 目标波动率）
-3. **账户定义**：来自 `tracker/config/accounts.yaml`（基础仓位、倍数）
+2. **组合权重**：来自 `portfolio_optimizer/data/portfolio_opt_{account}.json`（风险平价 + 目标波动率）
+3. **账户定义**：来自 `cta_live_deploy/configs/accounts.yaml`，由 `portfolio_optimizer` 同步生成
 4. **最终仓位**：`fixed_size = base_size × final_allocation`
 
 ## 校验规则（R1-R5）
