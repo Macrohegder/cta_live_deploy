@@ -14,7 +14,8 @@
       "contract_size": 300,
       "auto_daily_end": true,
       "daily_end_hour": 14,
-      "daily_end_minute": 59
+      "daily_end_minute": 59,
+      "signal_vt_symbol": "IH889.CFFEX"
     }
   }
 }

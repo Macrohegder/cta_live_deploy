@@ -129,7 +129,9 @@ def validate_cta_config(config_path: Path, verbose: bool = True, strategies_dir:
         if not validate_vt_symbol(vt_symbol):
             raise ValueError(f"[R5] {key}: vt_symbol '{vt_symbol}' 格式不正确")
 
-        extra = [k for k in setting if k not in parameters]
+        # 框架级保留键（由评估器/runner 消费，不进策略）：信号/执行合约分离声明
+        FRAMEWORK_KEYS = {"signal_vt_symbol"}
+        extra = [k for k in setting if k not in parameters and k not in FRAMEWORK_KEYS]
         if extra:
             if verbose:
                 print(f"  [WARN] 非策略参数 {extra}")
