@@ -396,7 +396,8 @@ class RsiMeanReversionStrategy(TargetPosTemplate):
 
     rsi_window = 14
     rsi_buy_threshold = 30
-    rsi_sell_threshold = 70
+    # 2026-08-05 用户决定：rsimr 只做多，卖出阈值写死 100（RSI>100 不可能，做空分支永不触发）
+    rsi_sell_threshold = 100
     rsi_exit_mean = 50
     atr_window = 14
     sl_atr_multiplier = 2.0
@@ -675,7 +676,9 @@ class RsiMeanReversionFactor:
         self.vt_symbol = vt_symbol
         self.rsi_window = rsi_window
         self.rsi_buy_threshold = rsi_buy_threshold
-        self.rsi_sell_threshold = rsi_sell_threshold
+        # 2026-08-05 用户决定：rsimr 只做多，卖出阈值写死 100（RSI>100 不可能，做空分支永不触发）。
+        # 构造函数保留 rsi_sell_threshold 形参仅为兼容旧配置/旧 ensemble_params，传入值一律忽略。
+        self.rsi_sell_threshold = 100
         self.rsi_exit_mean = rsi_exit_mean
         self.atr_window = atr_window
         self.sl_atr_multiplier = sl_atr_multiplier

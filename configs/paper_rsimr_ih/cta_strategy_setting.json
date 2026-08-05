@@ -3,7 +3,7 @@
     "class_name": "RsiMeanReversionEnsembleStrategy",
     "vt_symbol": "IH2609.CFFEX",
     "setting": {
-      "ensemble_params": "[{\"rsi_buy_threshold\":30,\"rsi_sell_threshold\":90,\"rsi_exit_mean\":50},{\"rsi_buy_threshold\":30,\"rsi_sell_threshold\":70,\"rsi_exit_mean\":50},{\"rsi_buy_threshold\":30,\"rsi_sell_threshold\":80,\"rsi_exit_mean\":50},{\"rsi_buy_threshold\":20,\"rsi_sell_threshold\":70,\"rsi_exit_mean\":50},{\"rsi_buy_threshold\":30,\"rsi_sell_threshold\":90,\"rsi_exit_mean\":60}]",
+      "ensemble_params": "[{\"rsi_buy_threshold\":20,\"rsi_sell_threshold\":100,\"rsi_exit_mean\":50},{\"rsi_buy_threshold\":30,\"rsi_sell_threshold\":100,\"rsi_exit_mean\":50},{\"rsi_buy_threshold\":20,\"rsi_sell_threshold\":100,\"rsi_exit_mean\":40},{\"rsi_buy_threshold\":40,\"rsi_sell_threshold\":100,\"rsi_exit_mean\":40},{\"rsi_buy_threshold\":40,\"rsi_sell_threshold\":100,\"rsi_exit_mean\":50}]",
       "ensemble_mode": "hard_vote_3",
       "max_lots": 1,
       "rsi_window": 14,
